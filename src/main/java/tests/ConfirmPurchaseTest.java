@@ -58,6 +58,8 @@ public class ConfirmPurchaseTest {
 
     @After
     public void tearDown() {
-        DriverManager.closeDriver();
+        if (webDriver != null) {
+            webDriver.close(); //Ensures complete browser closure
+        }
     }
 }

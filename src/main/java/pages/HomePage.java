@@ -32,7 +32,7 @@ public class HomePage extends BasePage {
      * @param origin
      */
     public void enterOrigin(String origin) {
-        confirmPurchasePage.waitUntilElementIsDisplayed(originInput, 1000);
+        waitUntilElementIsDisplayed(originInput, 1000);
         setElementText(originInput, origin);
     }
     /**
