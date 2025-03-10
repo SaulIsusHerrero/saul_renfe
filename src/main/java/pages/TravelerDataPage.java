@@ -37,7 +37,7 @@ public class TravelerDataPage extends BasePage {
      * @param name String with the traveler´s name
      */
     public void typeName(String name){
-        confirmPurchasePage.waitUntilElementIsDisplayed(nameInput, 1000);
+        waitUntilElementIsDisplayed(nameInput, 1000);
         setElementText(nameInput, name);
     }
 
@@ -85,7 +85,7 @@ public class TravelerDataPage extends BasePage {
      * Clicks the "Personalize my trip" button in the Traveler Data page
      */
     public void clickPersonalizeTravelButton() {
-        confirmPurchasePage.waitUntilElementIsDisplayed(personalizeTravelButton, 5000);
+        waitUntilElementIsDisplayed(personalizeTravelButton, 5000);
         scrollElementIntoView(personalizeTravelButton);
         clickElement(personalizeTravelButton);
     }
@@ -94,7 +94,7 @@ public class TravelerDataPage extends BasePage {
      * Clicks the "Follow with the purchase" in the Traveler Data page
      */
     public void clickFollowPurchaseButton() {
-        confirmPurchasePage.waitUntilElementIsDisplayed(followPurchaseButton, 5000);
+        waitUntilElementIsDisplayed(followPurchaseButton, 5000);
         scrollElementIntoView(followPurchaseButton);
         clickElement(followPurchaseButton);
     }
@@ -120,7 +120,7 @@ public class TravelerDataPage extends BasePage {
      * @param expectedSelected boolean with the expected selected state of the element
      */
     public void cardRadioButtonSelected(boolean expectedSelected) {
-        confirmPurchasePage.waitUntilElementIsDisplayed(cardRadioButtonLabel, 5000);
+        waitUntilElementIsDisplayed(cardRadioButtonLabel, 5000);
         setElementSelected(cardRadioButtonInput, cardRadioButtonLabel, expectedSelected);
     }
 
@@ -128,7 +128,7 @@ public class TravelerDataPage extends BasePage {
      * Clicks new card bank in the Traveler Data page
      */
     public void clickNewCard() {
-        confirmPurchasePage.waitUntilElementIsDisplayed(newCardButton, 5000);
+        waitUntilElementIsDisplayed(newCardButton, 5000);
         scrollElementIntoView(newCardButton);
         clickElement(newCardButton);
     }
@@ -139,7 +139,7 @@ public class TravelerDataPage extends BasePage {
      * @param expectedSelected boolean with the expected selected state of the element, for example "true" or "false"
      */
     public void setCheckboxSelectedPP(boolean expectedSelected) {
-        confirmPurchasePage.waitUntilElementIsDisplayed(privacyPolicyCheckBoxLabel, 5000);
+        waitUntilElementIsDisplayed(privacyPolicyCheckBoxLabel, 5000);
         setElementSelected(privacyPolicyCheckBoxInput, privacyPolicyCheckBoxLabel, expectedSelected);
     }
 
@@ -147,7 +147,7 @@ public class TravelerDataPage extends BasePage {
      * Clicks the Complete your purchase button in the Traveler Data page
      */
     public void clickCompletePurchaseButton() {
-        confirmPurchasePage.waitUntilElementIsDisplayed(finnishPurchaseButton, 5000);
+        waitUntilElementIsDisplayed(finnishPurchaseButton, 5000);
         scrollElementIntoView(finnishPurchaseButton);
         clickElement(finnishPurchaseButton);
     }
@@ -157,7 +157,7 @@ public class TravelerDataPage extends BasePage {
      * means all the mandatory data is completed
      */
     public boolean isDataCompletedCheckboxGreen() {
-        confirmPurchasePage.waitUntilElementIsDisplayed(dataCompleted, 5000);
+        waitUntilElementIsDisplayed(dataCompleted, 5000);
         return isElementSelected(dataCompleted);
     }
 

@@ -78,4 +78,18 @@ public class BasePage {
         acceptButton.click();
     }
 
+    /**
+     * Wait until an element is displayed in the Home page
+     * @param locator as a By
+     * @param timeout as a long
+     */
+    public boolean waitUntilElementIsDisplayed(By locator, long timeout) {
+        try {
+            Thread.sleep(timeout); // Simula una espera (se recomienda usar WebDriverWait en su lugar)
+            return webDriver.findElement(locator).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

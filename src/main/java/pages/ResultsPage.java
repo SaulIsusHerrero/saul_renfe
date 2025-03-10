@@ -25,7 +25,7 @@ public class ResultsPage extends BasePage {
      * Clicks the first available train button in the Results page
      */
     public void clickFirstAvailableTrain() {
-        confirmPurchasePage.waitUntilElementIsDisplayed(availableTrain, 1000);
+        waitUntilElementIsDisplayed(availableTrain, 1000);
         clickElement(availableTrain);
     }
 
@@ -33,7 +33,7 @@ public class ResultsPage extends BasePage {
      * Clicks the Basic fare button in the Results page
      */
     public void clickFareApplied() {
-        confirmPurchasePage.waitUntilElementIsDisplayed(fareTrain, 1000);
+        waitUntilElementIsDisplayed(fareTrain, 1000);
         clickElement(fareTrain);
     }
 
@@ -41,7 +41,7 @@ public class ResultsPage extends BasePage {
      * Clicks the Selection button in the Results page
      */
     public void clickSelectionApplied() {
-        confirmPurchasePage.waitUntilElementIsDisplayed(selectButton, 1000);
+        waitUntilElementIsDisplayed(selectButton, 1000);
         clickElement(selectButton);
     }
 
@@ -51,7 +51,7 @@ public class ResultsPage extends BasePage {
      * @param expectedSelected boolean with the expected selected state of the element, for example "true" or "false"
      */
     public void setRefundCheckboxSelected(boolean expectedSelected) {
-        confirmPurchasePage.waitUntilElementIsDisplayed(noShowAgainRefundLabel, 5000);
+        waitUntilElementIsDisplayed(noShowAgainRefundLabel, 5000);
         setElementSelected(noShowAgainRefundInput, noShowAgainRefundLabel, expectedSelected);
     }
 
@@ -59,7 +59,7 @@ public class ResultsPage extends BasePage {
      * Clicks the link to continue without refund of the train ticket in the Results page
      */
     public void clickLinkContinueNoRefund() {
-        confirmPurchasePage.waitUntilElementIsDisplayed(continueFareLink, 1000);
+        waitUntilElementIsDisplayed(continueFareLink, 1000);
         clickElement(availableTrain);
     }
 

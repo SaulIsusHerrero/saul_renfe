@@ -1,5 +1,10 @@
-C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\pages\SearchResultsPage.java
-C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\tests\InvalidCardPaymentTest.java
+C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\pages\TravelerDataPage.java
+C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\pages\ConfirmPurchasePage.java
+C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\tests\TravelerDataTest.java
+C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\pages\ResultsPage.java
+C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\tests\HomePageSelectTicketTest.java
 C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\pages\HomePage.java
-C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\pages\PaymentPage.java
+C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\tests\ConfirmPurchaseTest.java
+C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\tests\ResultsPageSelectAvailableTicketTest.java
 C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\pages\BasePage.java
+C:\Users\sisus_amaris.com\Desktop\SAUL\QA_AUTOMATION_COURSE\PRUEBA_RENFE\src\main\java\utils\DriverManager.java
