@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.Assert;
+import org.junit.Assert;
 import pages.TravelerDataPage;
 
 public class TravelerDataTest {
@@ -46,7 +46,7 @@ public class TravelerDataTest {
         travelerDataPage.clickFollowPurchaseButton();
         travelerDataPage.typeEmailPayment("test@qa.com");
         travelerDataPage.typePhonePayment("696824570");
-        Assert.assertTrue(travelerDataPage.isDataCompletedCheckboxGreen(),"Please, complete mandatory fields");
+        Assert.assertTrue("Please, complete mandatory fields", travelerDataPage.isDataCompletedCheckboxGreen());
         travelerDataPage.clickPersonalizeTravelButton();
         travelerDataPage.clickFollowPurchaseButton();
         travelerDataPage.typeEmailPayment("test@qa.com");

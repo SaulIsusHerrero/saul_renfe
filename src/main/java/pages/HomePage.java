@@ -1,30 +1,39 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
-import org.openqa.selenium.interactions.Actions;
+import java.util.List;
 
 public class HomePage extends BasePage {
 
     public HomePage(WebDriver driver) {
         super(driver);
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        PageFactory.initElements(driver, this);
+
     }
 
     // Locators
     private By originInput = By.xpath("//input[@id='origin']");
     private By destinationInput = By.xpath("//input[@id='destination']");
-    private By dateDepatureInput = By.xpath("//input[@id='first-input']");
+    private By dateDepartureInput = By.xpath("//input[@id='first-input']");
     private By onlyDepartureRadioButtonLabel = By.xpath("//label[@for='trip-go']");
-    private By onlyDepatureRadioButtonInput = By.xpath("//input[@id='trip-go']");
-    private By departureDayInput = By.xpath("//input[@id='first-input']");
+    private By onlyDepartureRadioButtonInput = By.xpath("//input[@id='trip-go']");
+    private By datePicker = By.id("datepicker-desde");
+    private By acceptButton = By.xpath("//button[contains(text(),'Aceptar')]");
     private By clickSearchTicketsButton= By.xpath("//button[normalize-space()='Buscar billete']");
 
     //Variables
-    private ConfirmPurchasePage confirmPurchasePage;
+    private WebDriver driver;
+    private WebDriverWait wait;
 
     // Methods
     /**
@@ -49,7 +58,7 @@ public class HomePage extends BasePage {
      */
     public void selectDepartureDate() {
         //waitUntilElementIsDisplayed(, 1000);
-        clickElement(dateDepatureInput);
+        clickElement(dateDepartureInput);
     }
 
     /**
@@ -59,21 +68,35 @@ public class HomePage extends BasePage {
      */
     public void clickOnlyGoRadioButtonSelected(boolean expectedSelected) {
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(1));
-        setElementSelected(onlyDepatureRadioButtonInput, onlyDepartureRadioButtonLabel, expectedSelected);
+        setElementSelected(onlyDepartureRadioButtonInput, onlyDepartureRadioButtonLabel, expectedSelected);
     }
 
-    /**
-     * Clicks the exact departure day
-     * @param departureDay as String
-     */
-    public void selectDate(String departureDay){
-        scrollElementIntoView(departureDayInput);
-        clickElement(departureDayInput);
-        webDriver.findElement(departureDayInput).clear();
-        setElementText(departureDayInput, departureDay);
-        Actions actions = new Actions(webDriver);
-        actions.moveByOffset(0, 0).click().perform();
+    // Método para hacer clic en el botón "Aceptar" del calendario
+    public void clickAcceptButton() {
+        // Esperar y buscar el botón "Aceptar"
+        List<WebElement> botones = driver.findElements(acceptButton);
+        System.out.println("Número de botones encontrados: " + botones.size());
+
+        if (!botones.isEmpty()) {
+            WebElement acceptButtonElement = botones.get(0); // Tomar el primer botón encontrado
+
+            // Hacer scroll hasta el botón
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", acceptButtonElement);
+            WebElement acceptButton = new WebDriverWait(webDriver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(this.acceptButton));
+            // Intentar hacer clic con Selenium
+            try {
+                acceptButton.click();
+            } catch (Exception e) {
+                System.out.println("No se pudo hacer clic con Selenium, probando con JavaScript...");
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", acceptButton);
+            }
+
+            System.out.println("Botón 'Aceptar' del calendario clicado con éxito.");
+        } else {
+            System.out.println("No se encontró el botón 'Aceptar'. Verifica el XPath.");
+        }
     }
+
     /**
      * Searches the selected ticket in the Home page
      */

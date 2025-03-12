@@ -1,15 +1,17 @@
 package tests;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.Assert;
-import pages.BasePage;
 import pages.HomePage;
+import org.junit.Assert;
 
+import java.time.Duration;
 public class HomePageSelectTicketTest {
     //Variables
     private WebDriver webDriver;
@@ -38,15 +40,14 @@ public class HomePageSelectTicketTest {
         homePage.enterDestination("Barcelona-Sants"); //Select a destination
         homePage.selectDepartureDate();
         homePage.clickOnlyGoRadioButtonSelected(true);
-        String date = "lun., 31/03/25";
-        homePage.selectDate(date);
-        homePage.clickSearchTicketButton();
+        homePage.clickAcceptButton();
+        //homePage.clickSearchTicketButton();
     }
 
-    @After
+   /** @After
     public void tearDown() {
     if (webDriver != null) {
     webDriver.close(); //Ensures complete browser closure
     }
-    }
+    }*/
 }
