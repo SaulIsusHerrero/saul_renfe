@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -101,8 +98,17 @@ public class HomePage extends BasePage {
      * Searches the selected ticket in the Home page
      */
     public void clickSearchTicketButton() {
-        WebElement acceptButton = new WebDriverWait(webDriver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(clickSearchTicketsButton));
-        acceptButton.click();
+        try {
+            // Esperar hasta que el botón sea clickeable
+            WebElement searchButton = new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.elementToBeClickable(clickSearchTicketsButton));
+            searchButton.click();
+        } catch (TimeoutException e) {
+            System.out.println("El botón no fue clickeable en el tiempo esperado. Intentando con JavaScript...");
+            // Intentar hacer clic con JavaScript
+            WebElement searchButton = driver.findElement(clickSearchTicketsButton);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", searchButton);
+        }
     }
 
 }

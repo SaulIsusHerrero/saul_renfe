@@ -40,13 +40,13 @@ public class HomePageSelectTicketTest {
         homePage.selectDepartureDate();
         homePage.clickOnlyGoRadioButtonSelected(true);
         homePage.clickAcceptButton();
-        //homePage.clickSearchTicketButton();
+        homePage.clickSearchTicketButton();
     }
 
-   @AfterMethod
+   /**@AfterMethod
     public void tearDown() {
     if (webDriver != null) {
     webDriver.close(); //Ensures complete browser closure
     }
-    }
+    }*/
 }
