@@ -1,25 +1,24 @@
 package tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import pages.HomePage;
-import org.junit.Assert;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-import java.time.Duration;
 public class HomePageSelectTicketTest {
     //Variables
     private WebDriver webDriver;
     private HomePage homePage;
 
-    @Before
+    @BeforeMethod
     public void setup() {
         // Configuration Chrome options
+        WebDriverManager.chromedriver().setup(); // Descarga y configura el driver automáticamente
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--incognito");
 
@@ -44,10 +43,10 @@ public class HomePageSelectTicketTest {
         //homePage.clickSearchTicketButton();
     }
 
-   /** @After
+   @AfterMethod
     public void tearDown() {
     if (webDriver != null) {
     webDriver.close(); //Ensures complete browser closure
     }
-    }*/
+    }
 }

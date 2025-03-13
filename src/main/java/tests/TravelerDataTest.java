@@ -1,13 +1,13 @@
 package tests;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.junit.Assert;
 import pages.TravelerDataPage;
 
 public class TravelerDataTest {
@@ -17,7 +17,7 @@ public class TravelerDataTest {
     private WebDriver webDriver;
     private TravelerDataPage travelerDataPage;
 
-    @Before
+    @BeforeMethod
     public void setup() {
         // Configuration Chrome options
         ChromeOptions options = new ChromeOptions();
@@ -46,7 +46,7 @@ public class TravelerDataTest {
         travelerDataPage.clickFollowPurchaseButton();
         travelerDataPage.typeEmailPayment("test@qa.com");
         travelerDataPage.typePhonePayment("696824570");
-        Assert.assertTrue("Please, complete mandatory fields", travelerDataPage.isDataCompletedCheckboxGreen());
+        Assert.assertTrue(travelerDataPage.isDataCompletedCheckboxGreen(), "Please, complete mandatory fields");
         travelerDataPage.clickPersonalizeTravelButton();
         travelerDataPage.clickFollowPurchaseButton();
         travelerDataPage.typeEmailPayment("test@qa.com");
@@ -57,7 +57,7 @@ public class TravelerDataTest {
         travelerDataPage.clickCompletePurchaseButton();
     }
 
-    @After
+    @AfterMethod
     public void tearDown() {
         if (webDriver != null) {
             webDriver.close(); //Ensures complete browser closure

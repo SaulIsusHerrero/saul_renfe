@@ -1,9 +1,9 @@
 package tests;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pages.BasePage;
@@ -20,7 +20,7 @@ public class ConfirmPurchaseTest {
     private ConfirmPurchasePage confirmPurchasePage;
     private BasePage basePage;
 
-    @Before
+    @BeforeMethod
     public void setup() {
         webDriver = DriverManager.getDriver();
         if (webDriver == null) {
@@ -35,7 +35,7 @@ public class ConfirmPurchaseTest {
         basePage.clickAcceptAllCookiesButton();
 
         // Verificar que estamos en la página correcta
-        Assert.assertNotNull("confirmPurchasePage es null", confirmPurchasePage);
+        Assert.assertNotNull("confirmPurchasePage es null", confirmPurchasePage.toString());
         Assert.assertEquals("Datos de la operación", webDriver.findElement(assertionConfirmDataPage).getText());
 
         // Ingresar datos de pago
@@ -47,7 +47,7 @@ public class ConfirmPurchaseTest {
         // Verificar que aparece el error
         BasePage basePage = new BasePage(webDriver);
         boolean cardErrorPopUp = basePage.waitUntilElementIsDisplayed(popUpPaymentError, 3000);
-        Assert.assertTrue("No apareció el mensaje de error 'Tarjeta no soportada (RS18)'", cardErrorPopUp);
+        Assert.assertTrue(cardErrorPopUp, "No apareció el mensaje de error 'Tarjeta no soportada (RS18)'");
 
         if (cardErrorPopUp) {
             System.out.println("El pop-up con el error 'Tarjeta no soportada (RS18)' apareció.");
@@ -56,7 +56,7 @@ public class ConfirmPurchaseTest {
         }
     }
 
-    @After
+    @AfterMethod
     public void tearDown() {
         if (webDriver != null) {
             webDriver.close(); //Ensures complete browser closure

@@ -1,9 +1,9 @@
 package tests;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,7 +19,7 @@ public class ResultsPageSelectAvailableTicketTest {
     private WebDriver webDriver;
     private ResultsPage resultsPage;
 
-    @Before
+    @BeforeMethod
     public void setup() {
         // Configuration Chrome options
         ChromeOptions options = new ChromeOptions();
@@ -44,7 +44,7 @@ public class ResultsPageSelectAvailableTicketTest {
         resultsPage.clickLinkContinueNoRefund();
     }
 
-    @After
+    @AfterMethod
     public void tearDown() {
     if (webDriver != null) {
     webDriver.close(); //Ensures complete browser closure
