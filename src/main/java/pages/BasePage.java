@@ -4,6 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import java.util.List;
 
 public class BasePage {
     protected WebDriver webDriver; // Protected in order to be used by child classes
@@ -15,6 +16,7 @@ public class BasePage {
 
     //Locators
     private By acceptAllCookiesButton = By.id("onetrust-accept-btn-handler");
+    private By errorButtonLocator = By.xpath("//div[@class='error00']");
 
     /**
      * Writes text inside a given element locator
@@ -90,6 +92,24 @@ public class BasePage {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * Checks if there is an error in the page that the test opens.
+     */
+    public boolean CorrectPage(Boolean correctPage) {
+        // Waits and finds out the "Aceptar" button
+        Boolean correct = waitUntilElementIsDisplayed(errorButtonLocator, 3000);
+        List<WebElement> errorButton = webDriver.findElements(errorButtonLocator);
+        System.out.println("Checking if an error appears on the page, it isn't possible to continue with the purchase");
+
+        if (!errorButton.isEmpty()) {
+            System.out.println("It can´t be possible to continue with the test");
+            return true; // Stop the test because the page isn't displayed correctly
+        }
+
+        System.out.println("No error button found, the purchase can continue");
+        return false;
     }
 
 }
