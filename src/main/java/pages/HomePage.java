@@ -9,12 +9,11 @@ import java.time.Duration;
 import java.util.List;
 
 public class HomePage extends BasePage {
-
+    //Constructor
     public HomePage(WebDriver driver) {
-        super(driver);
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-
+        super(driver); //Calls to the constructor or methods from parent class
+        this.driver = driver; //Current class instance
+        PageFactory.initElements(driver, this); //Initialize the elements from a page in Page Object Model (POM)
     }
 
     // Locators
@@ -31,15 +30,15 @@ public class HomePage extends BasePage {
 
     // Methods
     /**
-     * Choose the trip origin in the Home page
+     * Chooses the trip origin in the Home page.
      * @param origin
      */
     public void enterOrigin(String origin) {
-        waitUntilElementIsDisplayed(originInput, 1000);
+        //waitUntilElementIsDisplayed(originInput, 1000);
         setElementText(originInput, origin);
     }
     /**
-     * Type the trip destination in the Home page
+     * Types the trip destination in the Home page.
      * @param destination String with the destination
      */
     public void enterDestination(String destination){
@@ -56,7 +55,7 @@ public class HomePage extends BasePage {
     }
 
     /**
-     * Marks the "only go trip" radio button as selected or unselected
+     * Marks the "only go trip" radio button as selected or unselected.
      *
      * @param expectedSelected boolean with the expected selected state of the element
      */
@@ -65,19 +64,22 @@ public class HomePage extends BasePage {
         setElementSelected(onlyDepartureRadioButtonInput, onlyDepartureRadioButtonLabel, expectedSelected);
     }
 
-    //Method to click the 'Accept' button on the calendar.
+    /**
+     * Method to click the 'Accept' button on the calendar in Home page.
+     */
     public void clickAcceptButton() {
-        //Wait for and find the 'Accept' button.
+        //Waits and finds the 'Accept' button.
         List<WebElement> botones = driver.findElements(acceptButton);
         System.out.println("Number of buttons found: " + botones.size());
 
         if (!botones.isEmpty()) {
-            WebElement acceptButtonElement = botones.get(0); // clicks the 1st button found it
+            WebElement acceptButtonElement = botones.get(0); // clicks the 1st button found it.
 
-            // Scrolls till the buton
+            // Scrolls till the button.
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", acceptButtonElement);
-            WebElement acceptButton = new WebDriverWait(webDriver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(this.acceptButton));
-            // Attempt to click with Selenium
+            WebElement acceptButton = new WebDriverWait(webDriver, Duration.ofSeconds(10)).
+                    until(ExpectedConditions.elementToBeClickable(this.acceptButton));
+            // Attempt to click with Selenium.
             try {
                 acceptButton.click();
             } catch (Exception e) {
@@ -92,7 +94,7 @@ public class HomePage extends BasePage {
     }
 
     /**
-     * Searches the selected ticket in the Home page
+     * Searches the selected ticket in the Home page.
      */
     public void clickSearchTicketButton() {
         try {

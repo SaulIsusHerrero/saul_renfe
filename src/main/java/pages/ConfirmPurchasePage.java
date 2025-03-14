@@ -9,13 +9,12 @@ public class ConfirmPurchasePage {
         this.driver = driver;
     }
 
-    //Variables
+    //Driver initialization
     private WebDriver driver;
 
     //Methods
-
     /**
-     * type the bank card in the confirmation purchase page
+     * Types the bank card in the confirmation purchase page.
      * @param cardNumber as a String
      */
     public void typeBankCard(String cardNumber) {
@@ -23,7 +22,7 @@ public class ConfirmPurchasePage {
     }
 
     /**
-     * type the expiration date MM/YY in the confirmation purchase page
+     * Types the expiration date MM/YY in the confirmation purchase page.
      * @param expirationDate as a String
      */
     public void typeExpirationDate(String expirationDate) {
@@ -31,7 +30,7 @@ public class ConfirmPurchasePage {
     }
 
     /**
-     * type the CVV security number in the confirmation purchase page
+     * Types the CVV security number in the confirmation purchase page.
      * @param cvv as a String
      */
     public void typeCvv(String cvv) {
@@ -39,7 +38,7 @@ public class ConfirmPurchasePage {
     }
 
     /**
-     * Click the confirmation of purchase button in the confirmation purchase page
+     * Clicks the confirmation of purchase button in the confirmation purchase page.
      */
     public void clickConfirmPurchaseButton() {
         driver.findElement(By.id("confirm-purchase")).click();

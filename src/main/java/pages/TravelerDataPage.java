@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 public class TravelerDataPage extends BasePage {
 
     public TravelerDataPage(WebDriver driver) {
-        super(driver);
+        super(driver); //is used to call its constructor or methods from the parent class BasePage
     }
 
     // Locators
@@ -28,21 +28,18 @@ public class TravelerDataPage extends BasePage {
     private By finnishPurchaseButton = By.xpath("//button[normalize-space()='Finaliza tu compra']");
     private By dataCompleted = By.xpath("//div[@id='check-circle-green-v10']");
 
-    //Variables
-    private ConfirmPurchasePage confirmPurchasePage;
-
     // Methods
     /**
-     * Types the first surnamne in the Traveler Data page
+     * Types the first surnamne in the Traveler Data page.
      * @param name String with the traveler´s name
      */
     public void typeName(String name){
-        waitUntilElementIsDisplayed(nameInput, 1000);
+        //waitUntilElementIsDisplayed(nameInput, 1000);
         setElementText(nameInput, name);
     }
 
     /**
-     * Types the first surname in the Traveler Data page
+     * Types the first surname in the Traveler Data page.
      * @param firstSurname String with the traveler´s first surname
      */
     public void typeFirstSurnamne(String firstSurname){
@@ -50,7 +47,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Types the second surname in the Traveler Data page
+     * Types the second surname in the Traveler Data page.
      * @param secondSurname String with the traveler´s second surname
      */
     public void typeSecondSurnamne(String secondSurname){
@@ -58,7 +55,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Types the DNI in the Traveler Data page
+     * Types the DNI in the Traveler Data page.
      * @param dni String with the traveler´s dni
      */
     public void typeDni(String dni){
@@ -74,7 +71,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Types the phone number in the Traveler Data page
+     * Types the phone number in the Traveler Data page.
      * @param phone String with the traveler´s phone number
      */
     public void typePhone(String phone){
@@ -82,7 +79,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Clicks the "Personalize my trip" button in the Traveler Data page
+     * Clicks the "Personalize my trip" button in the Traveler Data page.
      */
     public void clickPersonalizeTravelButton() {
         waitUntilElementIsDisplayed(personalizeTravelButton, 5000);
@@ -91,7 +88,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Clicks the "Follow with the purchase" in the Traveler Data page
+     * Clicks the "Follow with the purchase" in the Traveler Data page.
      */
     public void clickFollowPurchaseButton() {
         waitUntilElementIsDisplayed(followPurchaseButton, 5000);
@@ -100,7 +97,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Types the e-mail for the payment in the Traveler Data page
+     * Types the e-mail for the payment in the Traveler Data page.
      * @param emailPayment String with the traveler´s phone number
      */
     public void typeEmailPayment(String emailPayment){
@@ -108,7 +105,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Types the phone number in the Traveler Data page
+     * Types the phone number in the Traveler Data page.
      * @param phonePayment String with the traveler´s phone number
      */
     public void typePhonePayment(String phonePayment){
@@ -116,7 +113,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Marks the Bank card radio button as selected or unselected
+     * Marks the Bank card radio button as selected or unselected.
      * @param expectedSelected boolean with the expected selected state of the element
      */
     public void cardRadioButtonSelected(boolean expectedSelected) {
@@ -125,7 +122,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Clicks new card bank in the Traveler Data page
+     * Clicks new bank card in the Traveler Data page.
      */
     public void clickNewCard() {
         waitUntilElementIsDisplayed(newCardButton, 5000);
@@ -134,7 +131,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Marks the Privacy Policy checkbox as selected or unselected in the Traveler Data page
+     * Marks the Privacy Policy checkbox as selected or unselected in the Traveler Data page.
      *
      * @param expectedSelected boolean with the expected selected state of the element, for example "true" or "false"
      */
@@ -144,7 +141,7 @@ public class TravelerDataPage extends BasePage {
     }
 
     /**
-     * Clicks the Complete your purchase button in the Traveler Data page
+     * Clicks the Complete your purchase button in the Traveler Data page.
      */
     public void clickCompletePurchaseButton() {
         waitUntilElementIsDisplayed(finnishPurchaseButton, 5000);
@@ -154,7 +151,7 @@ public class TravelerDataPage extends BasePage {
 
     /**
      * Returns "true" or "false" depending on if the Data page checkbox is currently in green that
-     * means all the mandatory data is completed
+     * means all the mandatory data is completed.
      */
     public boolean isDataCompletedCheckboxGreen() {
         waitUntilElementIsDisplayed(dataCompleted, 5000);

@@ -1,14 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-import java.util.List;
 
 public class ResultsPage extends BasePage {
 
@@ -24,12 +17,9 @@ public class ResultsPage extends BasePage {
     private By noShowAgainRefundInput = By.xpath("//input[@id='modal_fareupg_nomostrar']");
     private By continueFareLink = By.xpath("//p[@id='aceptarConfirmacionFareUpgrade']");
 
-    //Variables
-    private ConfirmPurchasePage confirmPurchasePage;
-
     //Methods
     /**
-    * Clicks the first available train button in the Results page
+    * Clicks the first available train button in the Results page.
     /*/
     public void clickFirstAvailableTrain(){
         //waitUntilElementIsDisplayed(availableTrain, 1000);
@@ -37,28 +27,28 @@ public class ResultsPage extends BasePage {
     }
 
     /**
-    //* Clicks the Basic fare button in the Results page
-    //*/
+    * Clicks the Basic fare button in the Results page.
+    */
     public void clickFareApplied() {
-        waitUntilElementIsDisplayed(fareTrain, 1000);
+        //waitUntilElementIsDisplayed(fareTrain, 1000);
         clickElement(fareTrain);
     }
 
      /**
-     * Clicks the Selection button in the Results page
+     * Clicks the Selection button in the Results page.
      */
     public void clickSelectionApplied() {
-        waitUntilElementIsDisplayed(selectButton, 1000);
+        //waitUntilElementIsDisplayed(selectButton, 1000);
         clickElement(selectButton);
     }
 
      /**
-    // * Marks the No show again checkbox as selected or unselected in the Results page
-    // *
-    // * @param expectedSelected boolean with the expected selected state of the element, for example "true" or "false"
-    // */
+     * Marks the No show again checkbox as selected or unselected in the Results page.
+     *
+    * @param expectedSelected boolean with the expected selected state of the element, for example "true" or "false"
+    */
     public void setRefundCheckboxSelected(boolean expectedSelected) {
-        waitUntilElementIsDisplayed(noShowAgainRefundLabel, 5000);
+        //waitUntilElementIsDisplayed(noShowAgainRefundLabel, 5000);
         setElementSelected(noShowAgainRefundInput, noShowAgainRefundLabel, expectedSelected);
     }
 
@@ -66,7 +56,7 @@ public class ResultsPage extends BasePage {
     * Clicks the link to continue without refund of the train ticket in the Results page
     */
     public void clickLinkContinueNoRefund() {
-        waitUntilElementIsDisplayed(continueFareLink, 1000);
+        //waitUntilElementIsDisplayed(continueFareLink, 1000);
         clickElement(availableTrain);
     }
 
