@@ -13,7 +13,6 @@ public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
 
     }
@@ -24,13 +23,11 @@ public class HomePage extends BasePage {
     private By dateDepartureInput = By.xpath("//input[@id='first-input']");
     private By onlyDepartureRadioButtonLabel = By.xpath("//label[@for='trip-go']");
     private By onlyDepartureRadioButtonInput = By.xpath("//input[@id='trip-go']");
-    private By datePicker = By.id("datepicker-desde");
     private By acceptButton = By.xpath("//button[contains(text(),'Aceptar')]");
     private By clickSearchTicketsButton= By.xpath("//button[normalize-space()='Buscar billete']");
 
     //Variables
     private WebDriver driver;
-    private WebDriverWait wait;
 
     // Methods
     /**
@@ -68,29 +65,29 @@ public class HomePage extends BasePage {
         setElementSelected(onlyDepartureRadioButtonInput, onlyDepartureRadioButtonLabel, expectedSelected);
     }
 
-    // Método para hacer clic en el botón "Aceptar" del calendario
+    //Method to click the 'Accept' button on the calendar.
     public void clickAcceptButton() {
-        // Esperar y buscar el botón "Aceptar"
+        //Wait for and find the 'Accept' button.
         List<WebElement> botones = driver.findElements(acceptButton);
-        System.out.println("Número de botones encontrados: " + botones.size());
+        System.out.println("Number of buttons found: " + botones.size());
 
         if (!botones.isEmpty()) {
-            WebElement acceptButtonElement = botones.get(0); // Tomar el primer botón encontrado
+            WebElement acceptButtonElement = botones.get(0); // clicks the 1st button found it
 
-            // Hacer scroll hasta el botón
+            // Scrolls till the buton
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", acceptButtonElement);
             WebElement acceptButton = new WebDriverWait(webDriver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(this.acceptButton));
-            // Intentar hacer clic con Selenium
+            // Attempt to click with Selenium
             try {
                 acceptButton.click();
             } catch (Exception e) {
-                System.out.println("No se pudo hacer clic con Selenium, probando con JavaScript...");
+                System.out.println("Could not click with Selenium, trying with JavaScript...");
                 ((JavascriptExecutor) driver).executeScript("arguments[0].click();", acceptButton);
             }
 
-            System.out.println("Botón 'Aceptar' del calendario clicado con éxito.");
+            System.out.println("Accept' button on the calendar clicked successfully.");
         } else {
-            System.out.println("No se encontró el botón 'Aceptar'. Verifica el XPath.");
+            System.out.println("The 'Accept' button was not found. Verify the XPath.");
         }
     }
 
@@ -99,13 +96,12 @@ public class HomePage extends BasePage {
      */
     public void clickSearchTicketButton() {
         try {
-            // Esperar hasta que el botón sea clickeable
+            // Waits until the element is clickable.
             WebElement searchButton = new WebDriverWait(driver, Duration.ofSeconds(10))
                     .until(ExpectedConditions.elementToBeClickable(clickSearchTicketsButton));
             searchButton.click();
         } catch (TimeoutException e) {
-            System.out.println("El botón no fue clickeable en el tiempo esperado. Intentando con JavaScript...");
-            // Intentar hacer clic con JavaScript
+            System.out.println("The button was not clickable within the expected time. Trying with JavaScript...");
             WebElement searchButton = driver.findElement(clickSearchTicketsButton);
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", searchButton);
         }

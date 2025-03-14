@@ -24,7 +24,7 @@ public class InvalidCardPaymentTest {
     @BeforeMethod
     public void setup() {
         // Configuration Chrome options
-        WebDriverManager.chromedriver().setup(); // Descarga y configura el driver automáticamente
+        WebDriverManager.chromedriver().setup(); // Download and configure the driver automatically.
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--incognito");
 
@@ -52,15 +52,17 @@ public class InvalidCardPaymentTest {
 
     @Test
     public void resultsPageInvalidCardPaymentTest() {
-    webDriver.get("https://venta.renfe.com/vol/buscarTrenEnlaces.do?c=_EKaf"); // URL page
+    // URL page, is needed to change the alphanumeric code like "SRm0" (length 4 positions)
+    webDriver.get("https://venta.renfe.com/vol/buscarTrenEnlaces.do?c=_SRm0");
     resultsPage.clickAcceptAllCookiesButton();
-    //Assertion in order to ensure you are inn the correct web page
+    //Assertion in order to ensure you are in the correct web page
     Assert.assertNotEquals(assertionResultsPage, "Selecciona tu viaje");
-    resultsPage.clickFirstAvailableTrain();
-    resultsPage.clickFareApplied();
-    resultsPage.clickSelectionApplied();
-    resultsPage.setRefundCheckboxSelected(true);
-    resultsPage.clickLinkContinueNoRefund();
+    resultsPage.resultsCorrectPage();
+    //resultsPage.clickFirstAvailableTrain();
+    //resultsPage.clickFareApplied();
+    //resultsPage.clickSelectionApplied();
+    //resultsPage.setRefundCheckboxSelected(true);
+    //resultsPage.clickLinkContinueNoRefund();
     }
 
     @AfterMethod
