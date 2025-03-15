@@ -1,6 +1,5 @@
 package utils;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,34 +9,40 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import java.time.Duration;
 
 public class DriverManager {
-    private static WebDriver driver;
+    private static WebDriver webDriver;
     private static final String BROWSER = System.getProperty("browser", "chrome"); // Default: Chrome
 
     public static WebDriver getDriver() {
-        if (driver == null) {
+        if (webDriver == null) {
             switch (BROWSER.toLowerCase()) {
                 case "firefox":
-                    WebDriverManager.firefoxdriver().setup();
+                    webDriver = new ChromeDriver();
                     FirefoxOptions firefoxOptions = new FirefoxOptions();
                     firefoxOptions.addArguments("-private"); // Modo incógnito en Firefox
-                    driver = new FirefoxDriver(firefoxOptions);
+                    webDriver = new FirefoxDriver(firefoxOptions);
                     break;
                 case "edge":
-                    WebDriverManager.edgedriver().setup();
-                    driver = new EdgeDriver();
+                    webDriver = new EdgeDriver();
                     break;
                 case "chrome":
                 default:
-                    WebDriverManager.chromedriver().setup();
+                    webDriver = new ChromeDriver();
                     ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--incognito");
-                    driver = new ChromeDriver(chromeOptions);
+                    webDriver = new ChromeDriver(chromeOptions);
                     break;
             }
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            driver.manage().window().maximize();
+            webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            webDriver.manage().window().maximize();
         }
-        return driver;
+        return webDriver;
+    }
+
+    public static void closeDriver() {
+        if (webDriver != null) {
+            webDriver.quit();
+            webDriver = null;
+        }
     }
 
 }
