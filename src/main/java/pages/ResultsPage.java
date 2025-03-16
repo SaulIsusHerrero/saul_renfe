@@ -56,8 +56,8 @@ public class ResultsPage extends BasePage {
     * Clicks the link to continue without refund of the train ticket in the Results page
     */
     public void clickLinkContinueNoRefund() {
-        //waitUntilElementIsDisplayed(continueFareLink, 1000);
-        clickElement(availableTrain);
+        waitUntilElementIsDisplayed(continueFareLink, 1000);
+        clickElement(continueFareLink);
     }
 
 }
