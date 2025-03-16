@@ -18,6 +18,8 @@ import pages.HomePage;
 import pages.ResultsPage;
 import pages.TravelerDataPage;
 import pages.ConfirmPurchasePage;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -43,46 +45,30 @@ public class InvalidCardPaymentTest {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--incognito"); //Incognit mode in Chrome
         webDriver = new ChromeDriver(chromeOptions);
-
-        /**
-        //Firefox: Initialization of the FirefoxDriver with the configured options
-        webDriver = new FirefoxDriver();
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.addArguments("-private"); // Private mode in Firefox
-        webDriver = new FirefoxDriver(firefoxOptions);
-        */
-
-         /**
-         //Edge : Initialization of the EdgeDriver with the configured options
-         webDriver = new EdgeDriver();
-         EdgeOptions edgeOptions = new EdgeOptions();
-         edgeOptions.addArguments("--incognito"); // Incognit mode in Edge
-         webDriver = new EdgeDriver(edgeOptions);
-         */
-
-         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-         webDriver.manage().window().maximize();
-         webDriver.get("https://www.renfe.com/es/es"); // URL page.
-         basePage = new BasePage(webDriver); // Initialization of the Base Page.
-         homePage = new HomePage(webDriver); // Initialization of the Home Page.
-         resultsPage = new ResultsPage(webDriver); // Initialization of the Results Page.
-         travelerDataPage = new TravelerDataPage(webDriver); // Initialization of the Traveler Data Page.
-         confirmPurchasePage = new ConfirmPurchasePage(webDriver); // Initialization of Confirm Purchase Page.
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        webDriver.manage().window().maximize();
+        webDriver.get("https://www.renfe.com/es/es"); // URL page.
+        basePage = new BasePage(webDriver); // Initialization of the Base Page.
+        homePage = new HomePage(webDriver); // Initialization of the Home Page.
+        resultsPage = new ResultsPage(webDriver); // Initialization of the Results Page.
+        travelerDataPage = new TravelerDataPage(webDriver); // Initialization of the Traveler Data Page.
+        confirmPurchasePage = new ConfirmPurchasePage(webDriver); // Initialization of Confirm Purchase Page.
     }
 
-    @Test(priority = 0, timeOut = 5000)
-    public void homePageInvalidCardPaymentTest() {
-        //Ticket selection and submit search.
-        Assert.assertNotNull(basePage, "basePage is not initialized correctly");
+        @Test(priority = 0, timeOut = 5000)
+        public void RenfeInvalidCardPaymentTest() {
         basePage.clickAcceptAllCookiesButton();
-        //Assertion to ensure you are in the correct web page.
-        Assert.assertEquals("Buscar billete", "Buscar billete");
         homePage.enterOrigin("Valencia Joaquín Sorolla"); //Select an origin.
         homePage.enterDestination("Barcelona-Sants"); //Select a destination.
         homePage.selectDepartureDate();
         homePage.clickOnlyGoRadioButtonSelected(true);
         homePage.clickAcceptButton();
         homePage.clickSearchTicketButton();
+        // Espera hasta que la URL contenga "buscarTrenEnlaces.do"
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlContains("buscarTrenEnlaces.do"));
+        //Assertion to ensure you are in the correct web page.
+        Assert.assertNotEquals("Buscar billete", "Buscar billete");
     }
 
     @Test(priority = 1, timeOut = 5000)

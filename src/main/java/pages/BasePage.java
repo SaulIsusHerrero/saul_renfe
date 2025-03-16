@@ -15,9 +15,9 @@ public class BasePage {
     protected WebDriver webDriver; // Protected in order to be used by child classes.
 
     //Constructor with WebDriver as a parameter.
-    public BasePage(WebDriver driver) {
-        this.webDriver = driver;
-        PageFactory.initElements(driver, this);
+    public BasePage(WebDriver webDriver) {
+        this.webDriver = webDriver;
+        PageFactory.initElements(webDriver, this);
     }
 
     //Locators

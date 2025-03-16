@@ -12,8 +12,8 @@ public class HomePage extends BasePage {
     //Constructor
     public HomePage(WebDriver driver) {
         super(driver); //Calls to the constructor or methods from parent class
-        this.driver = driver; //Current class instance
-        PageFactory.initElements(driver, this); //Initialize the elements from a page in Page Object Model (POM)
+        this.webDriver = webDriver; //Current class instance
+        PageFactory.initElements(webDriver, this); //Initialize the elements from a page in Page Object Model (POM)
     }
 
     // Locators
@@ -23,7 +23,8 @@ public class HomePage extends BasePage {
     private By onlyDepartureRadioButtonLabel = By.xpath("//label[@for='trip-go']");
     private By onlyDepartureRadioButtonInput = By.xpath("//input[@id='trip-go']");
     private By acceptButton = By.xpath("//button[contains(text(),'Aceptar')]");
-    private By clickSearchTicketsButton= By.xpath("//button[normalize-space()='Buscar billete']");
+
+
 
     //Variables
     private WebDriver driver;
@@ -69,14 +70,14 @@ public class HomePage extends BasePage {
      */
     public void clickAcceptButton() {
         //Waits and finds the 'Accept' button.
-        List<WebElement> botones = driver.findElements(acceptButton);
+        List<WebElement> botones = webDriver.findElements(acceptButton);
         System.out.println("Number of buttons found: " + botones.size());
 
         if (!botones.isEmpty()) {
             WebElement acceptButtonElement = botones.get(0); // clicks the 1st button found it.
 
             // Scrolls till the button.
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", acceptButtonElement);
+            ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", acceptButtonElement);
             WebElement acceptButton = new WebDriverWait(webDriver, Duration.ofSeconds(10)).
                     until(ExpectedConditions.elementToBeClickable(this.acceptButton));
             // Attempt to click with Selenium.
@@ -97,16 +98,52 @@ public class HomePage extends BasePage {
      * Searches the selected ticket in the Home page.
      */
     public void clickSearchTicketButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // Localizador del botón "Buscar billete"
+        By searchButtonLocator = By.xpath("//button[normalize-space()='Buscar billete']");
+
         try {
-            // Waits until the element is clickable.
-            WebElement searchButton = new WebDriverWait(driver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.elementToBeClickable(clickSearchTicketsButton));
+            // Esperar a que el botón sea visible y clickeable
+            WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(searchButtonLocator));
+
+            // Intentar hacer clic con Selenium
             searchButton.click();
+            System.out.println("Clic realizado en 'Buscar billete' con Selenium.");
+
+        } catch (ElementClickInterceptedException e) {
+            System.out.println("El botón 'Buscar billete' está bloqueado. Intentando con JavaScript...");
+
+            // Si el clic es interceptado, usar JavaScriptExecutor
+            WebElement searchButton = driver.findElement(searchButtonLocator);
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", searchButton);
+            System.out.println("Clic realizado en 'Buscar billete' con JavaScript.");
+
         } catch (TimeoutException e) {
-            System.out.println("The button was not clickable within the expected time. Trying with JavaScript...");
-            WebElement searchButton = driver.findElement(clickSearchTicketsButton);
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", searchButton);
+            System.out.println("El botón 'Buscar billete' no fue encontrado en el tiempo esperado.");
+        }
+
+        // Esperar un momento y verificar si la URL cambia
+        try {
+            Thread.sleep(3000); // Espera breve antes de verificar la URL
+            System.out.println("URL actual después del clic: " + driver.getCurrentUrl());
+
+            // Si la URL no cambia, intentar enviar el formulario manualmente
+            if (driver.getCurrentUrl().contains("renfe.com/es/es")) {
+                System.out.println("La URL no cambió. Intentando enviar el formulario con JavaScript...");
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("document.querySelector('form').submit();");
+            }
+
+            // Esperar a que la nueva URL se cargue
+            wait.until(ExpectedConditions.urlContains("buscarTrenEnlaces.do"));
+            System.out.println("Página redirigida correctamente a la búsqueda de trenes.");
+
+        } catch (TimeoutException e) {
+            System.out.println("La URL no cambió a la página de resultados en el tiempo esperado.");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
-
 }

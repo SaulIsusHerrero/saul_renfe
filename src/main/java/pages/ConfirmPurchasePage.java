@@ -5,9 +5,9 @@ import org.openqa.selenium.WebDriver;
 
 public class ConfirmPurchasePage extends BasePage{
     // Constructor
-    public ConfirmPurchasePage(WebDriver driver) {
-        super(driver);
-        this.driver = driver;
+    public ConfirmPurchasePage(WebDriver webDriver) {
+        super(webDriver);
+        this.webDriver = webDriver;
     }
 
     //Driver initialization
@@ -19,7 +19,7 @@ public class ConfirmPurchasePage extends BasePage{
      * @param cardNumber as a String
      */
     public void typeBankCard(String cardNumber) {
-        driver.findElement(By.id("card-number")).sendKeys(cardNumber);
+        webDriver.findElement(By.id("card-number")).sendKeys(cardNumber);
     }
 
     /**
@@ -27,7 +27,7 @@ public class ConfirmPurchasePage extends BasePage{
      * @param expirationDate as a String
      */
     public void typeExpirationDate(String expirationDate) {
-        driver.findElement(By.id("expiration-date")).sendKeys(expirationDate);
+        webDriver.findElement(By.id("expiration-date")).sendKeys(expirationDate);
     }
 
     /**
@@ -35,13 +35,13 @@ public class ConfirmPurchasePage extends BasePage{
      * @param cvv as a String
      */
     public void typeCvv(String cvv) {
-        driver.findElement(By.id("cvv")).sendKeys(cvv);
+        webDriver.findElement(By.id("cvv")).sendKeys(cvv);
     }
 
     /**
      * Clicks the confirmation of purchase button in the confirmation purchase page.
      */
     public void clickConfirmPurchaseButton() {
-        driver.findElement(By.id("confirm-purchase")).click();
+        webDriver.findElement(By.id("confirm-purchase")).click();
     }
 }
