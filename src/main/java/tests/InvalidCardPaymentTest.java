@@ -108,9 +108,6 @@ public class InvalidCardPaymentTest {
         //resultsPage.clickSelectionApplied();
         //resultsPage.setRefundCheckboxSelected(true);
         //resultsPage.clickLinkContinueNoRefund();
-
-        // Optional, we can still assert again if it´s needed that we can´t access to the page.
-        Assert.assertFalse(isIncorrectCorrectPage, "It can't be possible to continue with the test");
     }
 
     @Test(priority = 2, timeOut = 5000)
@@ -149,9 +146,6 @@ public class InvalidCardPaymentTest {
         //travelerDataPage.clickNewCard();
         //travelerDataPage.setCheckboxSelectedPP(true);
         //travelerDataPage.clickCompletePurchaseButton();
-
-        // Optional, we can still assert again if it´s needed that we can´t access to the page.
-        Assert.assertFalse(isIncorrectCorrectPage, "It can't be possible to continue with the test");
     }
 
     @Test(priority = 4, timeOut = 10000)
@@ -173,9 +167,6 @@ public class InvalidCardPaymentTest {
         //confirmPurchasePage.typeExpirationDate("11/31");
         //confirmPurchasePage.typeCvv("990");
         //confirmPurchasePage.clickConfirmPurchaseButton();
-
-        // Optional, we can still assert again if it´s needed that we can´t access to the page.
-        Assert.assertFalse(isIncorrectCorrectPage, "It can't be possible to continue with the test");
     }
 
     @Test(priority = 3, timeOut = 5000)

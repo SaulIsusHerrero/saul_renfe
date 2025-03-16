@@ -108,7 +108,6 @@ public class BasePage {
      */
     public boolean IncorrectPage(Boolean incorrectPage) {
         //Waits and finds the "Aceptar" button
-        Boolean incorrect = waitUntilElementIsDisplayed(errorButtonLocator, 3000);
         List<WebElement> errorButton = webDriver.findElements(errorButtonLocator);
         System.out.println("Checking if an error appears on the page, it isn't possible to continue with the purchase");
 
