@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -37,32 +38,36 @@ public class InvalidCardPaymentTest {
 
     @BeforeMethod
     public void setup() throws InterruptedException {
-
         //Chrome: Initialization of the ChromeDriver with the configured options
         WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--incognito");
-        webDriver = new ChromeDriver(options);
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--incognito"); //Incognit mode in Chrome
+        webDriver = new ChromeDriver(chromeOptions);
 
         /**
         //Firefox: Initialization of the FirefoxDriver with the configured options
-        webDriver = new ChromeDriver();
+        webDriver = new FirefoxDriver();
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.addArguments("-private"); // Modo incógnito en Firefox
-        webDriver = new FirefoxDriver(firefoxOptions);*/
+        firefoxOptions.addArguments("-private"); // Private mode in Firefox
+        webDriver = new FirefoxDriver(firefoxOptions);
+        */
 
          /**
          //Edge : Initialization of the EdgeDriver with the configured options
-         webDriver = new EdgeDriver();*/
+         webDriver = new EdgeDriver();
+         EdgeOptions edgeOptions = new EdgeOptions();
+         edgeOptions.addArguments("--incognito"); // Incognit mode in Edge
+         webDriver = new EdgeDriver(edgeOptions);
+         */
 
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        webDriver.manage().window().maximize();
-        webDriver.get("https://www.renfe.com/es/es"); // URL page.
-        basePage = new BasePage(webDriver); // Initialization of the Base Page.
-        homePage = new HomePage(webDriver); // Initialization of the Home Page.
-        resultsPage = new ResultsPage(webDriver); // Initialization of the Results Page.
-        travelerDataPage = new TravelerDataPage(webDriver); // Initialization of the Traveler Data Page.
-        confirmPurchasePage = new ConfirmPurchasePage(webDriver); // Initialization of Confirm Purchase Page.
+         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+         webDriver.manage().window().maximize();
+         webDriver.get("https://www.renfe.com/es/es"); // URL page.
+         basePage = new BasePage(webDriver); // Initialization of the Base Page.
+         homePage = new HomePage(webDriver); // Initialization of the Home Page.
+         resultsPage = new ResultsPage(webDriver); // Initialization of the Results Page.
+         travelerDataPage = new TravelerDataPage(webDriver); // Initialization of the Traveler Data Page.
+         confirmPurchasePage = new ConfirmPurchasePage(webDriver); // Initialization of Confirm Purchase Page.
     }
 
     @Test(priority = 0, timeOut = 5000)
@@ -89,9 +94,12 @@ public class InvalidCardPaymentTest {
         // Assertion in order to ensure you are in the correct web page.
         Assert.assertNotEquals(assertionResultsPage, "Selecciona tu viaje");
 
-        boolean isCorrectPage = basePage.CorrectPage(true);
-        if (!isCorrectPage) {
+        boolean isIncorrectCorrectPage = basePage.IncorrectPage(true);
+        if (isIncorrectCorrectPage) {
             System.out.println("It can't be possible to continue with the test");
+        }
+        else{
+            System.out.println("The page is OK, you can continue with the test");
         }
 
         // Continue with the test regardless of the result of DataCorrectPage.
@@ -102,7 +110,7 @@ public class InvalidCardPaymentTest {
         //resultsPage.clickLinkContinueNoRefund();
 
         // Optional, we can still assert again if it´s needed that we can´t access to the page.
-        Assert.assertTrue(isCorrectPage, "It can't be possible to continue with the test");
+        Assert.assertFalse(isIncorrectCorrectPage, "It can't be possible to continue with the test");
     }
 
     @Test(priority = 2, timeOut = 5000)
@@ -113,9 +121,12 @@ public class InvalidCardPaymentTest {
         basePage.clickAcceptAllCookiesButton();
         //Assertion in order you are in the correct web page.
         Assert.assertNotEquals(assertionTravelerDataPage, "Introduce tus datos");
-        boolean isCorrectPage = basePage.CorrectPage(true);
-        if (!isCorrectPage) {
+        boolean isIncorrectCorrectPage = basePage.IncorrectPage(true);
+        if (isIncorrectCorrectPage) {
             System.out.println("It can't be possible to continue with the test");
+        }
+        else{
+            System.out.println("The page is OK, you can continue with the test");
         }
 
         // Continue with the test regardless of the result of CorrectPage.
@@ -139,8 +150,8 @@ public class InvalidCardPaymentTest {
         //travelerDataPage.setCheckboxSelectedPP(true);
         //travelerDataPage.clickCompletePurchaseButton();
 
-        // Optional, we can still assert again if it´s needed that we can´t access to the correct page.
-        Assert.assertTrue(isCorrectPage, "It can't be possible to continue with the test");
+        // Optional, we can still assert again if it´s needed that we can´t access to the page.
+        Assert.assertFalse(isIncorrectCorrectPage, "It can't be possible to continue with the test");
     }
 
     @Test(priority = 4, timeOut = 10000)
@@ -149,9 +160,12 @@ public class InvalidCardPaymentTest {
         webDriver.get("https://sis.redsys.es/sis/realizarPago");
         //Assertion in order you are in the correct web page.
         Assert.assertNotEquals(assertionConfirmPurchasePage, "Datos de la operación");
-        boolean isCorrectPage = basePage.CorrectPage(true);
-        if (!isCorrectPage) {
+        boolean isIncorrectCorrectPage = basePage.IncorrectPage(true);
+        if (isIncorrectCorrectPage) {
             System.out.println("It can't be possible to continue with the test");
+        }
+        else{
+            System.out.println("The page is OK, you can continue with the test");
         }
 
         // Continue with the test regardless of the result of CorrectPage.
@@ -160,8 +174,8 @@ public class InvalidCardPaymentTest {
         //confirmPurchasePage.typeCvv("990");
         //confirmPurchasePage.clickConfirmPurchaseButton();
 
-        // Optional, we can still assert again if it´s needed that we can´t access to the correct page.
-        Assert.assertFalse(isCorrectPage, "It can't be possible to continue with the test");
+        // Optional, we can still assert again if it´s needed that we can´t access to the page.
+        Assert.assertFalse(isIncorrectCorrectPage, "It can't be possible to continue with the test");
     }
 
     @Test(priority = 3, timeOut = 5000)
@@ -172,8 +186,7 @@ public class InvalidCardPaymentTest {
         Assert.assertNotNull(basePage, "basePage is not initialized correctly");
         basePage.clickAcceptAllCookiesButton();
         boolean cardErrorPopUp = basePage.waitUntilElementIsDisplayed(popUpPaymentError, 3000);
-        Assert.assertFalse(cardErrorPopUp, "No apareció el mensaje de error 'Tarjeta no soportada (RS18)'");
-
+        Assert.assertTrue(cardErrorPopUp, "No apareció el mensaje de error 'Tarjeta no soportada (RS18)'");
         if (cardErrorPopUp) {
             System.out.println("El pop-up con el error 'Tarjeta no soportada (RS18)' apareció.");
         } else {
