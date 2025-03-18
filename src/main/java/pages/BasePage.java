@@ -103,20 +103,4 @@ public class BasePage {
         }
     }
 
-    /**
-     * Checks if there is an error in the page that the test accesses
-     */
-    public boolean IncorrectPage(Boolean incorrectPage) {
-        //Waits and finds the "Aceptar" button
-        List<WebElement> errorButton = webDriver.findElements(errorButtonLocator);
-        System.out.println("Checking if an error appears on the page, it isn't possible to continue with the purchase");
-
-        if (!errorButton.isEmpty()) {
-            System.out.println("It can´t be possible to continue with the test");
-            return true; // Stop the test because the page isn't displayed correctly
-        } else {
-            System.out.println("No error button found, the purchase can continue");
-            return false;
-        }
-    }
 }

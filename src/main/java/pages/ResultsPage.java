@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 
 public class ResultsPage extends BasePage {
 
-    public ResultsPage(WebDriver driver) {
-        super(driver);
+    public ResultsPage(WebDriver webDriver) {
+        super(webDriver);
     }
 
     //Locators

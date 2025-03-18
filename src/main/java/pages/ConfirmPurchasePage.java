@@ -10,6 +10,9 @@ public class ConfirmPurchasePage extends BasePage{
         this.webDriver = webDriver;
     }
 
+    //Locator
+    private By popUpPaymentError = By.xpath("//div[@id='myModalBody']//li[contains(text(), 'Tarjeta no soportada (RS18)')]");
+
     //Driver initialization
     private WebDriver driver;
 
