@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
+import static io.opentelemetry.sdk.metrics.internal.data.EmptyExponentialHistogramBuckets.get;
+
 public class HomePage extends BasePage {
     // Locators
     public By originInputLocator = By.xpath("//input[@id='origin']");
@@ -89,15 +91,10 @@ public class HomePage extends BasePage {
      * Method to click the 'Accept' button on the calendar in Home page.
      */
     public void clickAcceptButton() {
-        //Waits and finds the 'Accept' button.
-        List<WebElement> botones = webDriver.findElements(acceptButtonLocator);
-        System.out.println("Number of buttons found: " + botones.size());
-
-        if (!botones.isEmpty()) {
-            WebElement acceptButtonElement = botones.get(0); // clicks the 1st button found it.
-        } else {
-            System.out.println("ERROR in the test");
-        }
+        //Clicks the Accept button.
+        scrollElementIntoView(acceptButtonLocator);
+        List<WebElement> botonAceptarCalendario = webDriver.findElements(acceptButtonLocator);
+        botonAceptarCalendario.get(0);
     }
 
     /**
