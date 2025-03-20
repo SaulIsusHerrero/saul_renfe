@@ -7,8 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.*;
+import org.testng.Assert;
 import java.time.Duration;
-import java.util.List;
 
 public class BasePage {
     //Driver initialization
@@ -21,8 +21,23 @@ public class BasePage {
     }
 
     //Locators
-    private By acceptAllCookiesButton = By.id("onetrust-accept-btn-handler");
-    private By errorButtonLocator = By.xpath("//div[@class='error00']");
+    protected By acceptAllCookiesButton = By.id("onetrust-accept-btn-handler");
+
+    //Variables
+    long timeout = 5;
+
+    /**
+     * Forces the execution to sleep for a determined amount of time
+     *
+     * @param time long with the wait duration in milliseconds, for example "5000" is equal to 5 seconds
+     */
+    public void sleep(long time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Writes text inside a given element locator.
@@ -40,7 +55,8 @@ public class BasePage {
      * @param locator By with the locator of the element.
      */
     public void clickElement(By locator) {
-        webDriver.findElement(locator).click();
+        WebElement element = webDriver.findElement(locator);
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", element);
     }
 
     /**
@@ -79,13 +95,14 @@ public class BasePage {
             clickElement(labelLocator);
         }
     }
+
     /**
      * Accepts all cookies in any Page.
      */
     public void clickAcceptAllCookiesButton() {
-        WebElement acceptButton = new WebDriverWait(webDriver, Duration.ofSeconds(10)).
+        WebElement acceptButton = new WebDriverWait(webDriver, Duration.ofSeconds(5)).
                 until(ExpectedConditions.elementToBeClickable(acceptAllCookiesButton));
-        acceptButton.click();
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", acceptButton);
     }
 
     /**
@@ -93,14 +110,9 @@ public class BasePage {
      * @param locator as a By
      * @param timeout as a long
      */
-    public boolean waitUntilElementIsDisplayed(By locator, long timeout) {
-        try {
-            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeout));
-            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-            return element.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
+    public void waitUntilElementIsDisplayed(By locator, long timeout) {
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeout));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        Assert.assertTrue(element.isDisplayed(),"The element" + element + "is not displayed");
     }
-
 }
