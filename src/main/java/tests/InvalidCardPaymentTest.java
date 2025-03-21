@@ -41,25 +41,20 @@ public class InvalidCardPaymentTest {
         homePage.clickSoloIdaButtonSelected(true);
         homePage.clickAcceptButton();
         homePage.clickSearchTicketButton();
-        basePage.sleep(10);
-        Assert.assertTrue(seleccionarTuViajePage.isSeleccionaTuViajeLabelEnabled());
-        basePage.sleep(10);
-        Assert.assertTrue(seleccionarTuViajePage.selectNextDayUntilTrainsAvailable());
-        //seleccionarTuViajePage.clickFareApplied();
-        //Assert.assertTrue(seleccionarTuViajePage.verifyNumberOfTravelers());
-        //Assert.assertTrue(seleccionarTuViajePage.verifyFareIsBasic());
-        //Assert.assertTrue(seleccionarTuViajePage.verifyTotalPriceEqualsFarePrice());
+        //Gestionar la transición entre paginas con un metodo general/base
+        seleccionarTuViajePage.verifyYouAreInSelecionaTuViaje();
+        seleccionarTuViajePage.selectFirstTrainAvailable();
+        seleccionarTuViajePage.clickFareApplied();
+        seleccionarTuViajePage.verifyNumberOfTravelers(true);
+        seleccionarTuViajePage.verifyFareIsBasic(true);
         //seleccionarTuViajePage.clickSelectButton();
-        //Assert.assertTrue(seleccionarTuViajePage.verifyNoContinueButtonAppears());
-        //Assert.assertTrue(seleccionarTuViajePage.verifyPopUpAppears());
         //seleccionarTuViajePage.clickContinueButton();
-        //Assert.assertTrue(seleccionarTuViajePage.isSeleccionaTuViajeLabelEnabled());
     }
-
-    //@AfterMethod
-        //public void tearDown() {
-            //if (webDriver != null) {
-                //webDriver.quit(); //Closes the current instance of the browser
-            //}
-        //}
+    /**
+    @AfterMethod
+        public void tearDown() {
+            if (webDriver != null) {
+                webDriver.quit(); //Closes the current instance of the browser
+            }
+        }*/
 }

@@ -27,19 +27,6 @@ public class BasePage {
     long timeout = 5;
 
     /**
-     * Forces the execution to sleep for a determined amount of time
-     *
-     * @param time long with the wait duration in milliseconds, for example "5000" is equal to 5 seconds
-     */
-    public void sleep(long time) {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
      * Writes text inside a given element locator.
      *
      * @param locator By with the locator of the element.
@@ -78,6 +65,13 @@ public class BasePage {
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) webDriver;
         javascriptExecutor.executeScript("arguments[0].scrollIntoView({block: 'center'});",
                 webDriver.findElement(locator));
+    }
+
+    /**
+     * Desplaza el elemento a la vista
+     */
+    void scrollElementIntoViewElement(WebElement element) {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     /**
