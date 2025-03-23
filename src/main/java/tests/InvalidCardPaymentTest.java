@@ -1,15 +1,13 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
-import pages.HomePage;
-import pages.SeleccionarTuViajePage;
+import pages.*;
+
 import java.time.Duration;
 
 public class InvalidCardPaymentTest {
@@ -18,6 +16,10 @@ public class InvalidCardPaymentTest {
     private BasePage basePage;
     private HomePage homePage;
     private SeleccionarTuViajePage seleccionarTuViajePage;
+    //private IntroduceTusDatosPage introduceTusDatosPage;
+    //private PersonalizaTuViajePage personalizaTuViajePage;
+    //private CompraPage compraPage;
+    //private PasarelaPagoPage pasarelaPagoPage;
 
     @BeforeMethod
     public void setup() throws InterruptedException {
@@ -30,6 +32,12 @@ public class InvalidCardPaymentTest {
         basePage = new BasePage(webDriver); //Initialization of the Base Page.
         homePage = new HomePage(webDriver); //Initialization of the Home Page.
         seleccionarTuViajePage = new SeleccionarTuViajePage(webDriver); //Initialization of the SeleccionarTuViaje Page.
+        //introduceTusDatosPage = new IntroduceTusDatosPage(webDriver); //Initialization of the IntroduceTusDatos Page.
+        //personalizaTuViajePage = new PersonalizaTuViajePage(webDriver); //Initialization of the PersonalizaTuViaje Page.
+        //compraPage = new ComprPage(webDriver); //Initialization of the Compra Page.
+        //pasarelaPagoPage = new PasarelaPagoPage(webDriver); //Initialization of the pasarelaPago Page.
+
+
     }
 
     @Test
@@ -41,14 +49,41 @@ public class InvalidCardPaymentTest {
         homePage.clickSoloIdaButtonSelected(true);
         homePage.clickAcceptButton();
         homePage.clickSearchTicketButton();
-        //Gestionar la transición entre paginas con un metodo general/base
         seleccionarTuViajePage.verifyYouAreInSelecionaTuViaje();
         seleccionarTuViajePage.selectFirstTrainAvailable();
         seleccionarTuViajePage.clickFareApplied();
-        seleccionarTuViajePage.verifyNumberOfTravelers(true);
-        seleccionarTuViajePage.verifyFareIsBasic(true);
-        //seleccionarTuViajePage.clickSelectButton();
-        //seleccionarTuViajePage.clickContinueButton();
+        seleccionarTuViajePage.verifyNumberOfTravelers();
+        seleccionarTuViajePage.verifyFareIsBasic();
+        seleccionarTuViajePage.verifyFarePrice();
+        seleccionarTuViajePage.verifyTotalPrice();
+        seleccionarTuViajePage.verifyFareAndTotalPricesAreEquals();
+        seleccionarTuViajePage.clickSelectButton();
+        seleccionarTuViajePage.popUpFareAppears();
+        seleccionarTuViajePage.verifyPopUpFareAppears();
+        seleccionarTuViajePage.linkContinueSameFareAppears();
+        seleccionarTuViajePage.verifyLinkContinueSameFare();
+        seleccionarTuViajePage.clickLinkContinueSameFare();
+        //introduceTusDatosPage.verifyYouAreInIntroduceYourDataPage();
+        //introduceTusDatosPage.Rellenar datos personales
+        //introduceTusDatosPage.assertequals al metodo seleccionarTuViajePage.verifyTotalPrice();
+        //PersonalizaTuViajePage.verifyYouAreInPersonalizedYourTravelPage
+        //PersonalizaTuViajePage.Clic en continuar con la compra
+        //PersonalizaTuViajePage.assertequals al metodo seleccionarTuViajePage.verifyTotalPrice();
+        //compraPage.verifyYouAreInCompraPage
+        //compraPage.Rellena email
+        //compraPage.Rellena telefono
+        //compraPage.Radiobutton pago con tarjeta bancaria
+        //compraPage.clicar en nueva tarjeta
+        //compraPage.Comprobar el precio del billete
+        //compraPage.clicar en checkbox condiciones de venta
+        //compraPage.clic en button continuar con la compra
+        //PasarelaPagoPage.verifyYouAreInPasarelaPagoPage
+        //PasarelaPagoPage.verify al importe
+        //PasarelaPagoPage.textbox tarajeta bancaria
+        //personalizaTuViajePage.text box fecha caducidad
+        //personalizaTuViajePage text box cvv
+        //personalizaTuViajePage click en boton pagar
+        //personalizaTuViajePage assertTrue al error pop up de "tarjeta no sopoertada (RS18)"
     }
     /**
     @AfterMethod
@@ -57,4 +92,5 @@ public class InvalidCardPaymentTest {
                 webDriver.quit(); //Closes the current instance of the browser
             }
         }*/
+
 }

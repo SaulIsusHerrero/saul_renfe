@@ -71,7 +71,7 @@ public class HomePage extends BasePage {
      * @param expectedSelected boolean with the expected selected state of the element
      */
     public void clickSoloIdaButtonSelected(boolean expectedSelected) {
-        waitUntilElementIsDisplayed(onlyDepartureRadioButtonLabel, 5000);
+        waitUntilElementIsDisplayed(onlyDepartureRadioButtonLabel, Duration.ofSeconds(5));
         setElementSelected(onlyDepartureRadioButtonInput, onlyDepartureRadioButtonLabel, expectedSelected);
     }
 
@@ -79,7 +79,7 @@ public class HomePage extends BasePage {
      * Method to click the 'Accept' button on the calendar in Home page.
      */
     public void clickAcceptButton() {
-        waitUntilElementIsDisplayed(acceptButtonLocator, 5);
+        waitUntilElementIsDisplayed(acceptButtonLocator, Duration.ofSeconds(5));
         scrollElementIntoView(acceptButtonLocator);
         clickElement(acceptButtonLocator);
         }
@@ -88,7 +88,7 @@ public class HomePage extends BasePage {
      * Searches the selected ticket in the Home page.
      */
     public void clickSearchTicketButton() {
-        waitUntilElementIsDisplayed(buscarBilleteLocator, 5);
+        waitUntilElementIsDisplayed(buscarBilleteLocator, Duration.ofSeconds(5));
         scrollElementIntoView(buscarBilleteLocator);
         clickElement(buscarBilleteLocator);
         }

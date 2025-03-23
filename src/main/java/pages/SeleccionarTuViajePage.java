@@ -16,16 +16,20 @@ public class SeleccionarTuViajePage extends BasePage {
     //Locators
     private By trainAvailable = By.cssSelector("div[id^='precio-viaje']:not(:has(div))");
     private By fareTrainBasic = By.xpath("(//div[@role='button' and @data-titulo-tarifa='Básico'])[1]");
-    private By selectDayRightArrow = By.xpath("//button[contains(@class, 'move_to_tomorrow') and @aria-label='Ir a día siguiente']");
+    private By selectDayRightArrow = By.cssSelector("button.move_to_tomorrow");
     private By seleccionaTuViajeLabel = By.xpath("//span[contains(text(), 'Selecciona tu viaje') and not(ancestor::select[@disabled])]");
-    private By totalPriceLocator = By.xpath("//div[contains(@class, 'total-price')]");
-    private By selectButtonLocator = By.xpath("//div[@class='select-more' and @id='btnSeleccionar' and @role='button' and @tabindex='0' and @title='Elegir el trayecto y pasar al siguiente paso']");
-    private By noContinueLinkLocator = By.xpath("//button[contains(text(), 'No, quiero continuar con Básico')]");
-    private By popUpLocator = By.xpath("//div[contains(@class, 'popup-content')]");
-    private By travelerLocator = By.xpath("//span[@class='viajero-lista']");
-    private By fareLocator = By.xpath("//div[@role='button' and @data-titulo-tarifa='Básico']");
+    private By travelerLocator = By.xpath("(//div[@class='rowitem1 viajerosSelected' and contains(., 'Total') and contains(., '(1) viajeros')])[1]");
+    private By basicFareLocator = By.xpath("//div[@id='tarifai']//span[contains(text(), 'Básico')]");
+    // TO DO : No usar precios porque varian entre ejecuciones diferentes.
+    private By basicPriceLocator = By.xpath("//span[@class='viajero-lista' and @id='viajero_i_1' and text()='65,75€']");
+    private By totalPriceLocator = By.xpath("//div[@class='rowitem1 d-none d-lg-inline d-xl-inline d-md-inline' and contains(., 'Precio Total') and contains(., '65,75€')]");
+    private By linkContinueSameFare = By.cssSelector("p#aceptarConfirmacionFareUpgrade.link-fareUpg");
+    private By btnSeleccionar = By.cssSelector("div.select-more[id='btnSeleccionar'][role='button'][title='Elegir el trayecto y pasar al siguiente paso']");
+    private By closeConfirmacionFareUpgrade = By.cssSelector("button#closeConfirmacionFareUpgrade.close.modalClose-promoUp");
+
     //Variables
     private BasePage basePage;
+    WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
     //Constructor
     public SeleccionarTuViajePage(WebDriver webDriver) {
@@ -34,12 +38,11 @@ public class SeleccionarTuViajePage extends BasePage {
     }
 
     //Methods
-
     /**
      * Checks if we are in the next Page "SeleccionarTuViajePage".
      */
     public void verifyYouAreInSelecionaTuViaje() {
-        waitUntilElementIsDisplayed(seleccionaTuViajeLabel, timeout);
+        waitUntilElementIsDisplayed(seleccionaTuViajeLabel, Duration.ofSeconds(5));
         WebElement element = webDriver.findElement(seleccionaTuViajeLabel);
         boolean labelDisplayed = element.isDisplayed();
         boolean labelEnabled = element.isEnabled();
@@ -48,8 +51,8 @@ public class SeleccionarTuViajePage extends BasePage {
     }
 
     /**
-    * Encuentra el primer tren disponible en el primer día posible
-    */
+     * Encuentra el primer tren disponible en el primer día posible
+     */
     public void selectFirstTrainAvailable() {
         boolean control = true;
 
@@ -62,10 +65,10 @@ public class SeleccionarTuViajePage extends BasePage {
                 // Haz clic en el primer tren disponible
                 WebElement firstTrain = webDriver.findElement(trainAvailable);
                 wait.until(ExpectedConditions.visibilityOf(firstTrain));
-                scrollElementIntoViewElement(firstTrain);
                 wait.until(ExpectedConditions.elementToBeClickable(firstTrain));
                 Actions actions = new Actions(webDriver);
-                actions.moveToElement(firstTrain).click().perform();
+                scrollElementIntoViewElement(firstTrain);
+                actions.moveToElement(firstTrain).click();
                 control = false;
             } else {
                 // Haz clic en el botón del siguiente día para buscar trenes disponibles
@@ -73,43 +76,95 @@ public class SeleccionarTuViajePage extends BasePage {
                 nextDayButton.click();
                 wait.until(ExpectedConditions.visibilityOfElementLocated(trainAvailable));
             }
-       }
-       // Verify that the train list is not empty
-       List<WebElement> finalTrainList = webDriver.findElements(trainAvailable);
-       Assert.assertTrue("No trains available", !finalTrainList.isEmpty());
+        }
+        // Verify that the train list is not empty
+        List<WebElement> finalTrainList = webDriver.findElements(trainAvailable);
+        Assert.assertTrue("No trains available", !finalTrainList.isEmpty());
     }
 
     /**
      * Clicks the Basic fare button in the Results page.
      */
     public void clickFareApplied() {
-        waitUntilElementIsDisplayed(fareTrainBasic, 5000);
-        scrollElementIntoView(fareTrainBasic);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
         clickElement(fareTrainBasic);
     }
 
     /**
      * Verifies the number of travelers for the trip
-     * @return true if is 1 traveler or is false this one.
      */
-    public boolean verifyNumberOfTravelers(boolean b) {
-        By travelerLocator = By.xpath("//span[@class='viajero-lista']");
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-        WebElement travelerElement = wait.until(ExpectedConditions.visibilityOfElementLocated(travelerLocator));
-        String travelerText = travelerElement.getText();
-        return travelerText.contains("Viajero 1");
+    public void verifyNumberOfTravelers() {
+        waitUntilElementIsDisplayed(travelerLocator, Duration.ofSeconds(5));
+        // Verificar que el locator contiene el número "1"
+        String locatorString = travelerLocator.toString();
+        Assert.assertTrue(locatorString.contains("1"));
     }
 
-    /**
-     * Verifies the fare chosen
-     * @return true if is the Basic fare or not
-     */
-    public boolean verifyFareIsBasic(boolean b) {
-        By fareLocator = By.xpath("//div[@role='button' and @data-titulo-tarifa='Básico']");
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-        WebElement fareElement = wait.until(ExpectedConditions.visibilityOfElementLocated(fareLocator));
-        String fareText = fareElement.getAttribute("data-titulo-tarifa");
-        return fareText.equals("Básico");
+    public void verifyFareIsBasic(){
+        waitUntilElementIsDisplayed(basicFareLocator, Duration.ofSeconds(5));
+        WebElement basicFareElement = webDriver.findElement(basicFareLocator);
+        boolean labelDisplayed = basicFareElement.isDisplayed();
+        Assert.assertTrue(labelDisplayed);
+    }
+
+    public boolean verifyFarePrice(){
+        waitUntilElementIsDisplayed(basicPriceLocator, Duration.ofSeconds(5));
+        WebElement basicFarePriceElement = webDriver.findElement(basicPriceLocator);
+        boolean labelDisplayedFarePrice = basicFarePriceElement.isDisplayed();
+        Assert.assertTrue(labelDisplayedFarePrice);
+        return labelDisplayedFarePrice;
+    }
+
+    public boolean verifyTotalPrice(){
+        waitUntilElementIsDisplayed(totalPriceLocator, Duration.ofSeconds(5));
+        WebElement totalPriceElement = webDriver.findElement(totalPriceLocator);
+        boolean labelDisplayedTotalPrice = totalPriceElement.isDisplayed();
+        Assert.assertTrue(labelDisplayedTotalPrice);
+        return labelDisplayedTotalPrice;
+    }
+
+    public void verifyFareAndTotalPricesAreEquals(){
+        Assert.assertEquals(verifyFarePrice(),verifyTotalPrice());
+    }
+
+    public void clickSelectButton(){
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+        WebElement clickSeleccionar = webDriver.findElement(btnSeleccionar);
+        wait.until(ExpectedConditions.visibilityOf(clickSeleccionar));
+        wait.until(ExpectedConditions.elementToBeClickable(clickSeleccionar));
+        Actions actions = new Actions(webDriver);
+        actions.moveToElement(clickSeleccionar).click().perform();
+    }
+
+    public boolean popUpFareAppears(){
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+        WebElement popUpChangeFare = webDriver.findElement(closeConfirmacionFareUpgrade);
+        boolean popUpChangeFareAppears = popUpChangeFare.isDisplayed();
+        return popUpChangeFareAppears;
+    }
+
+    public void verifyPopUpFareAppears(){
+        Assert.assertTrue(popUpFareAppears());
+    }
+
+    public boolean linkContinueSameFareAppears(){
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+        WebElement linkContinueSameFareElement = webDriver.findElement(linkContinueSameFare);
+        boolean linkContinueSameFareAppears = linkContinueSameFareElement.isDisplayed();
+        return linkContinueSameFareAppears;
+    }
+
+    public void verifyLinkContinueSameFare(){
+        Assert.assertTrue(linkContinueSameFareAppears());
+    }
+
+    public void clickLinkContinueSameFare(){
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+        WebElement clickContinueSameFare = webDriver.findElement(linkContinueSameFare);
+        wait.until(ExpectedConditions.visibilityOf(clickContinueSameFare));
+        wait.until(ExpectedConditions.elementToBeClickable(linkContinueSameFare));
+        Actions actions = new Actions(webDriver);
+        actions.moveToElement(clickContinueSameFare).click().perform();
     }
 
 }
