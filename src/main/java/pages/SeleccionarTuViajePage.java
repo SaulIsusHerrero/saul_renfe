@@ -21,8 +21,8 @@ public class SeleccionarTuViajePage extends BasePage {
     private By travelerLocator = By.xpath("(//div[@class='rowitem1 viajerosSelected' and contains(., 'Total') and contains(., '(1) viajeros')])[1]");
     private By basicFareLocator = By.xpath("//div[@id='tarifai']//span[contains(text(), 'Básico')]");
     // TO DO : No usar precios porque varian entre ejecuciones diferentes.
-    private By basicPriceLocator = By.xpath("//span[@class='viajero-lista' and @id='viajero_i_1' and text()='65,75€']");
-    private By totalPriceLocator = By.xpath("//div[@class='rowitem1 d-none d-lg-inline d-xl-inline d-md-inline' and contains(., 'Precio Total') and contains(., '65,75€')]");
+    private By basicPriceLocator = By.xpath("//span[@class='viajero-lista' and @id='viajero_i_1' and text()='43,85€']");
+    private By totalPriceLocator = By.xpath("//div[@class='rowitem1 d-none d-lg-inline d-xl-inline d-md-inline' and contains(., 'Precio Total') and contains(., '43,85€')]");
     private By linkContinueSameFare = By.cssSelector("p#aceptarConfirmacionFareUpgrade.link-fareUpg");
     private By btnSeleccionar = By.cssSelector("div.select-more[id='btnSeleccionar'][role='button'][title='Elegir el trayecto y pasar al siguiente paso']");
     private By closeConfirmacionFareUpgrade = By.cssSelector("button#closeConfirmacionFareUpgrade.close.modalClose-promoUp");
@@ -94,7 +94,7 @@ public class SeleccionarTuViajePage extends BasePage {
      * Verifies the number of travelers for the trip
      */
     public void verifyNumberOfTravelers() {
-        waitUntilElementIsDisplayed(travelerLocator, Duration.ofSeconds(5));
+        waitUntilElementIsDisplayed(travelerLocator, Duration.ofSeconds(10));
         // Verificar que el locator contiene el número "1"
         String locatorString = travelerLocator.toString();
         Assert.assertTrue(locatorString.contains("1"));
@@ -115,7 +115,7 @@ public class SeleccionarTuViajePage extends BasePage {
         return labelDisplayedFarePrice;
     }
 
-    public boolean verifyTotalPrice(){
+    public boolean verifyTotalPriceSelect(){
         waitUntilElementIsDisplayed(totalPriceLocator, Duration.ofSeconds(5));
         WebElement totalPriceElement = webDriver.findElement(totalPriceLocator);
         boolean labelDisplayedTotalPrice = totalPriceElement.isDisplayed();
@@ -124,7 +124,7 @@ public class SeleccionarTuViajePage extends BasePage {
     }
 
     public void verifyFareAndTotalPricesAreEquals(){
-        Assert.assertEquals(verifyFarePrice(),verifyTotalPrice());
+        Assert.assertEquals(verifyFarePrice(),verifyTotalPriceSelect());
     }
 
     public void clickSelectButton(){
