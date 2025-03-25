@@ -17,8 +17,8 @@ public class InvalidCardPaymentTest {
     private HomePage homePage;
     private SeleccionarTuViajePage seleccionarTuViajePage;
     private IntroduceTusDatosPage introduceTusDatosPage;
-    //private PersonalizaTuViajePage personalizaTuViajePage;
-    //private CompraPage compraPage;
+    private PersonalizaTuViajePage personalizaTuViajePage;
+    private CompraPage compraPage;
     //private PasarelaPagoPage pasarelaPagoPage;
 
     @BeforeMethod
@@ -33,8 +33,8 @@ public class InvalidCardPaymentTest {
         homePage = new HomePage(webDriver); //Initialization of the Home Page.
         seleccionarTuViajePage = new SeleccionarTuViajePage(webDriver); //Initialization of the SeleccionarTuViaje Page.
         introduceTusDatosPage = new IntroduceTusDatosPage(webDriver); //Initialization of the IntroduceTusDatos Page.
-        //personalizaTuViajePage = new PersonalizaTuViajePage(webDriver); //Initialization of the PersonalizaTuViaje Page.
-        //compraPage = new ComprPage(webDriver); //Initialization of the Compra Page.
+        personalizaTuViajePage = new PersonalizaTuViajePage(webDriver); //Initialization of the PersonalizaTuViaje Page.
+        compraPage = new CompraPage(webDriver); //Initialization of the Compra Page.
         //pasarelaPagoPage = new PasarelaPagoPage(webDriver); //Initialization of the pasarelaPago Page.
 
 
@@ -55,13 +55,11 @@ public class InvalidCardPaymentTest {
         seleccionarTuViajePage.verifyNumberOfTravelers();
         seleccionarTuViajePage.verifyFareIsBasic();
         seleccionarTuViajePage.verifyFarePrice();
-        seleccionarTuViajePage.verifyTotalPriceSelect();
+        seleccionarTuViajePage.verifyTotalPrice();
         seleccionarTuViajePage.verifyFareAndTotalPricesAreEquals();
         seleccionarTuViajePage.clickSelectButton();
         seleccionarTuViajePage.popUpFareAppears();
-        seleccionarTuViajePage.verifyPopUpFareAppears();
         seleccionarTuViajePage.linkContinueSameFareAppears();
-        seleccionarTuViajePage.verifyLinkContinueSameFare();
         seleccionarTuViajePage.clickLinkContinueSameFare();
         introduceTusDatosPage.verifyYouAreInIntroduceYourDataPage();
         introduceTusDatosPage.writeFirstNameField("John");
@@ -71,14 +69,13 @@ public class InvalidCardPaymentTest {
         introduceTusDatosPage.writeEmailField("test@qa.com");
         introduceTusDatosPage.writePhoneField("696824570");
         introduceTusDatosPage.verifyTotalPriceData();
-        introduceTusDatosPage.verifyTotalPriceBetweenPages();
-        introduceTusDatosPage.clicPersonalizeTrip();
-        //PersonalizaTuViajePage.verifyYouAreInPersonalizedYourTravelPage
-        //PersonalizaTuViajePage.Clic en continuar con la compra
-        //PersonalizaTuViajePage.assertequals al metodo seleccionarTuViajePage.verifyTotalPrice();
-        //compraPage.verifyYouAreInCompraPage
-        //compraPage.Rellena email
-        //compraPage.Rellena telefono
+        introduceTusDatosPage.clickPersonalizeTrip();
+        personalizaTuViajePage.verifyYouAreInPersonalizedYourTravelPage();
+        personalizaTuViajePage.continueWithPurchase();
+        personalizaTuViajePage.verifyTotalPersonalizePrice();
+        compraPage.verifyYouAreInCompraPage();
+        compraPage.typeEmail("test@qa.com");
+        compraPage.writePhoneField("696824570");
         //compraPage.Radiobutton pago con tarjeta bancaria
         //compraPage.clicar en nueva tarjeta
         //compraPage.Comprobar el precio del billete

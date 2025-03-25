@@ -5,17 +5,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 
 public class CompraPage extends BasePage {
     //Locators
-    private By trainAvailable = By.cssSelector("div[id^='precio-viaje']:not(:has(div))");
-    private By seleccionaTuViajeLabel = By.xpath("//span[contains(text(), 'Selecciona tu viaje') and not(ancestor::select[@disabled])]");
+    private By compraLabel = By.xpath("//span[contains(text(), 'Compra') and not(ancestor::select[@disabled])]");
+    private By emailField = By.xpath("//input[@id='inputEmail']");
+    private By telefonoField = By.xpath("//input[@id='telefonoComprador']");
 
     //Variables
-    private BasePage basePage;
     WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
     //Constructor
@@ -29,47 +28,62 @@ public class CompraPage extends BasePage {
      * Assert que estoy en la Page y esta habilitada “Personaliza tu viaje”
      */
     public void verifyYouAreInCompraPage() {
-        waitUntilElementIsDisplayed(seleccionaTuViajeLabel, Duration.ofSeconds(5));
-        WebElement element = webDriver.findElement(seleccionaTuViajeLabel);
+        waitUntilElementIsDisplayed(compraLabel, Duration.ofSeconds(5));
+        WebElement element = webDriver.findElement(compraLabel);
         boolean labelDisplayed = element.isDisplayed();
         boolean labelEnabled = element.isEnabled();
-        Assert.assertTrue("Selecciona tu viaje", labelDisplayed);
-        Assert.assertTrue("Selecciona tu viaje", labelEnabled);
+        Assert.assertTrue("Compra", labelDisplayed);
+        Assert.assertTrue("Compra", labelEnabled);
     }
 
     /**
-     * Rellena email
+     * type the E-mail in the textbox on the "Compra" page.
+     *
+     * @param email as a string
      */
-    //DEMOQA FORM
+    public void typeEmail(String email){
+        waitUntilElementIsDisplayed(emailField, Duration.ofSeconds(5));
+        setElementText(emailField, email);
+    }
 
     /**
-     * Rellena telefono
+     * type the Phone in the textbox on the "Introduce tus datos" page.
+     *
+     * @param phone as a string
      */
-    //DEMOQA FORM
+    public void writePhoneField(String phone) {
+        waitUntilElementIsDisplayed(telefonoField, Duration.ofSeconds(5));
+        setElementText(telefonoField, phone);
+    }
 
-    /**
-     * Radiobutton pago con tarjeta bancaria
-     */
-    //DEMOQA FORM
+   // /**
+   // * Marks the "Yes" radio button as selected or unselected in the "Compra" page
+   // *
+   // * @param expectedSelected boolean with the expected selected state of the element
+   // */
+    //public void compraTarjetaBancaria(boolean expectedSelected) {
+        //waitUntilElementIsDisplayed(bankCardLabel, 5000);
+        //setElementSelected(bankCardInput, bankCardlabel, expectedSelected);
+    //}
 
-    /**
-     * clicar en nueva tarjeta
-     */
+    ///**
+    // * clicar en nueva tarjeta
+    // */
     //iGUAL a metodo clic en fare
 
-    /**
-     * clicar en checkbox condiciones de venta
-     */
+    ///**
+    // * clicar en checkbox condiciones de venta
+    // */
     //DEMOQA FORM
 
-    /**
-     * Comprobar el precio del billete
-     */
+    ///**
+    // * Comprobar el precio del billete
+    // */
     //assertequals al metodo seleccionarTuViajePage.verifyTotalPrice();
 
-    /**
-     * clic en button continuar con la compra
-     */
+    ///**
+    // * clic en button continuar con la compra
+    // */
     //demo qa click button
 
 }

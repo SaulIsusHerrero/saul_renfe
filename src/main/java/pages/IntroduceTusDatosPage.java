@@ -8,6 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import pages.SeleccionarTuViajePage;
 
 public class IntroduceTusDatosPage extends BasePage {
     //Locators
@@ -18,13 +19,11 @@ public class IntroduceTusDatosPage extends BasePage {
     private By dniField = By.xpath("//input[@id='documento0']");
     private By telefonoField = By.xpath("//input[@id='telefono0']");
     private By emailField = By.xpath("//input[@id='email0']");
-    private By totalPriceDataLocator = By.xpath("//span[@id='totalTrayecto' and normalize-space()='43,85 €']");
+    private By totalPriceDataLocator = By.xpath("//span[@id='totalTrayecto']");
     private By btnPersonalizar = By.cssSelector("#btn-responsive > #submitpersonaliza");
 
     //Variables
-    private BasePage basePage;
-    private SeleccionarTuViajePage seleccionarTuViajePage;
-    WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+    SeleccionarTuViajePage seleccionarTuViajePage;
 
     //Constructor
     public IntroduceTusDatosPage(WebDriver webDriver) {
@@ -106,40 +105,20 @@ public class IntroduceTusDatosPage extends BasePage {
     }
 
     /**
-     * Obtener el precio de total del billete en "Introduce tus datos" Page
+     * Check the total price on "Introduce tus datos" Page
      */
-    public boolean verifyTotalPriceData(){
+    public void verifyTotalPriceData(){
         waitUntilElementIsDisplayed(totalPriceDataLocator, Duration.ofSeconds(5));
-        WebElement totalPriceElementData = webDriver.findElement(totalPriceDataLocator);
-        boolean labelDisplayedTotalPriceData = totalPriceElementData.isDisplayed();
-        Assert.assertTrue(labelDisplayedTotalPriceData);
-        return labelDisplayedTotalPriceData;
-    }
-
-    /**
-    * Comprobar el precio del billete
-    */
-    public boolean verifyTotalPriceBetweenPages() {
-        boolean priceSelect = true;
-        if (priceSelect) {
-            Assert.assertTrue(verifyTotalPriceData());
-            return true;
-        } else {
-            System.out.println("prices between select trip and data traveler are not equals");
-            return false;
-        }
+        boolean totalPriceData = isElementDisplayed(totalPriceDataLocator);
+        Assert.assertTrue(totalPriceData);
     }
 
     /**
      * Clic "Personalizar viaje" button
      */
-    public void clicPersonalizeTrip() {
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
-        WebElement clickPersonalizar = webDriver.findElement(btnPersonalizar);
-        wait.until(ExpectedConditions.visibilityOf(clickPersonalizar));
-        wait.until(ExpectedConditions.elementToBeClickable(clickPersonalizar));
-        Actions actions = new Actions(webDriver);
-        actions.moveToElement(clickPersonalizar).click().perform();
+    public void clickPersonalizeTrip() {
+        waitUntilElementIsDisplayed(btnPersonalizar, Duration.ofSeconds(5));
+        clickElement(btnPersonalizar);
     }
 
 }

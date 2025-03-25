@@ -10,11 +10,11 @@ import java.time.Duration;
 
 public class PersonalizaTuViajePage extends BasePage {
     //Locators
-    private By trainAvailable = By.cssSelector("div[id^='precio-viaje']:not(:has(div))");
-    private By seleccionaTuViajeLabel = By.xpath("//span[contains(text(), 'Selecciona tu viaje') and not(ancestor::select[@disabled])]");
+    private By personalizaTuViajeLabel = By.xpath("//span[contains(text(), 'Personaliza tu viaje') and not(ancestor::select[@disabled])]");
+    private By btnContinuar = By.cssSelector("button#submitFormaPago.form-button.btn.btn-accordion");
+    private By totalPricePersonalizeLocator = By.xpath("//span[@id='totalTrayecto']");
 
     //Variables
-    private BasePage basePage;
     WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
     //Constructor
@@ -29,22 +29,29 @@ public class PersonalizaTuViajePage extends BasePage {
      * Assert que estoy en la Page y esta habilitada “Personaliza tu viaje”
      */
     public void verifyYouAreInPersonalizedYourTravelPage() {
-        waitUntilElementIsDisplayed(seleccionaTuViajeLabel, Duration.ofSeconds(5));
-        WebElement element = webDriver.findElement(seleccionaTuViajeLabel);
+        waitUntilElementIsDisplayed(personalizaTuViajeLabel, Duration.ofSeconds(5));
+        WebElement element = webDriver.findElement(personalizaTuViajeLabel);
         boolean labelDisplayed = element.isDisplayed();
         boolean labelEnabled = element.isEnabled();
-        Assert.assertTrue("Selecciona tu viaje", labelDisplayed);
-        Assert.assertTrue("Selecciona tu viaje", labelEnabled);
+        Assert.assertTrue("Personaliza tu viaje", labelDisplayed);
+        Assert.assertTrue("Personaliza tu viaje", labelEnabled);
     }
 
     /**
-     * Clic en continuar con la compra
+     * Clic on continue with the purchase
      */
-    //CLICK
+    public void continueWithPurchase(){
+        waitUntilElementIsDisplayed(btnContinuar, Duration.ofSeconds(5));
+        clickElement(btnContinuar);
+    }
 
     /**
-     * Comprobar el precio del billete
+     * Verify the ticket price.
      */
-    //assertequals al metodo seleccionarTuViajePage.verifyTotalPrice();
+    public void verifyTotalPersonalizePrice(){
+        waitUntilElementIsDisplayed(totalPricePersonalizeLocator, Duration.ofSeconds(5));
+        boolean totalPricePersonalize = isElementDisplayed(totalPricePersonalizeLocator);
+        Assert.assertTrue(totalPricePersonalize);
+    }
 
 }

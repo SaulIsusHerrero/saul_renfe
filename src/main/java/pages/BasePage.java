@@ -109,4 +109,17 @@ public class BasePage {
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         Assert.assertTrue(element.isDisplayed(),"The element" + element + "is not displayed");
     }
+
+    /**
+     * Returns "true" or "false" depending on if a given element locator currently appears or not
+     *
+     * @param locator By with the locator of the element
+     */
+    public boolean isElementDisplayed(By locator) {
+        try {
+            return webDriver.findElement(locator).isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
 }
