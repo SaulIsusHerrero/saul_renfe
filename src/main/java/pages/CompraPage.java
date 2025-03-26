@@ -4,7 +4,9 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 
@@ -13,9 +15,9 @@ public class CompraPage extends BasePage {
     private By compraLabel = By.xpath("//span[contains(text(), 'Compra') and not(ancestor::select[@disabled])]");
     private By emailField = By.xpath("//input[@id='inputEmail']");
     private By telefonoField = By.xpath("//input[@id='telefonoComprador']");
-
-    //Variables
-    WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+    private By cardRadioInput = By.xpath("//input[@id='datosPago_cdgoFormaPago_tarjetaRedSys']");
+    private By cardRadioLabel = By.xpath("//span[@for='radiobutton']");
+    private By newBankCard = By.cssSelector("button.target-puntos-renfe.selecTarjeta");
 
     //Constructor
     public CompraPage(WebDriver webDriver) {
@@ -56,20 +58,24 @@ public class CompraPage extends BasePage {
         setElementText(telefonoField, phone);
     }
 
-   // /**
-   // * Marks the "Yes" radio button as selected or unselected in the "Compra" page
-   // *
-   // * @param expectedSelected boolean with the expected selected state of the element
-   // */
-    //public void compraTarjetaBancaria(boolean expectedSelected) {
-        //waitUntilElementIsDisplayed(bankCardLabel, 5000);
-        //setElementSelected(bankCardInput, bankCardlabel, expectedSelected);
-    //}
+    /**
+     * Marks the "Bank card" radio button as selected or unselected in the "Compra" page
+     *
+     * @param expectedSelected boolean with the expected selected state of the element
+     */
+    public void setCardRadioButtonSelected(boolean expectedSelected) {
+        waitUntilElementIsDisplayed(cardRadioLabel, Duration.ofSeconds(5));
+        setElementSelected(cardRadioInput, cardRadioLabel, expectedSelected);
+    }
 
-    ///**
-    // * clicar en nueva tarjeta
-    // */
-    //iGUAL a metodo clic en fare
+    /**
+     * Clicks in new card in the Compra page.
+     */
+    public void clickNewBankCard() {
+        waitUntilElementIsDisplayed(newBankCard, Duration.ofSeconds(5));
+        scrollElementIntoView(newBankCard);
+        clickElement(newBankCard);
+    }
 
     ///**
     // * clicar en checkbox condiciones de venta

@@ -122,4 +122,13 @@ public class BasePage {
             return false;
         }
     }
+
+    /**
+     * Returns the text inside a given element locator
+     *
+     * @param locator By with the locator of the element
+     */
+    public String getElementText(By locator) {
+        return webDriver.findElement(locator).getText();
+    }
 }

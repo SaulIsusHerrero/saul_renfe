@@ -76,8 +76,8 @@ public class InvalidCardPaymentTest {
         compraPage.verifyYouAreInCompraPage();
         compraPage.typeEmail("test@qa.com");
         compraPage.writePhoneField("696824570");
-        //compraPage.Radiobutton pago con tarjeta bancaria
-        //compraPage.clicar en nueva tarjeta
+        compraPage.setCardRadioButtonSelected(true);
+        compraPage.clickNewBankCard();
         //compraPage.Comprobar el precio del billete
         //compraPage.clicar en checkbox condiciones de venta
         //compraPage.clic en button continuar con la compra
