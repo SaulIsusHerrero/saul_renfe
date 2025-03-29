@@ -10,8 +10,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class SeleccionarTuViajePage extends BasePage {
+
     //Locators
-    private By trainAvailable = By.xpath("//div[@id='tren_1_item1']");
+    private By trainAvailable = By.cssSelector("div[id^='precio-viaje']:not(:has(div))");
     private By fareTrainBasic = By.xpath("(//span[@style='padding-right:10px;' and text()='Básico'])[1]");
     private By selectDayRightArrow = By.cssSelector("button.move_to_tomorrow");
     private By seleccionaTuViajeLabel = By.xpath("//span[contains(text(), 'Selecciona tu viaje') and not(ancestor::select[@disabled])]");
@@ -67,6 +68,7 @@ public class SeleccionarTuViajePage extends BasePage {
                 // Haz clic en el botón del siguiente día para buscar trenes disponibles
                 WebElement nextDayButton = webDriver.findElement(selectDayRightArrow);
                 nextDayButton.click();
+                wait.until(ExpectedConditions.visibilityOfElementLocated(trainAvailable));
             }
         }
     }

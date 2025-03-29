@@ -4,8 +4,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.JavascriptExecutor;
 
 import java.time.Duration;
 
@@ -15,9 +14,11 @@ public class CompraPage extends BasePage {
     private By compraLabel = By.xpath("//span[contains(text(), 'Compra') and not(ancestor::select[@disabled])]");
     private By emailField = By.xpath("//input[@id='inputEmail']");
     private By telefonoField = By.xpath("//input[@id='telefonoComprador']");
-    private By cardRadioInput = By.xpath("//input[@id='datosPago_cdgoFormaPago_tarjetaRedSys']");
-    private By cardRadioLabel = By.xpath("//span[@for='radiobutton']");
+    private By cardInput = By.xpath("//input[@id='datosPago_cdgoFormaPago_tarjetaRedSys']");
     private By newBankCard = By.cssSelector("button.target-puntos-renfe.selecTarjeta");
+    private By totalPriceCompralizeLocator = By.cssSelector("span#totalTrayecto.dinero-total");
+    private By conditionsCheckboxInput = By.xpath("//input[@id='aceptarCondiciones']");
+    private By btnContinuarCompra = By.cssSelector("button#butonPagar.pagar-a");
 
     //Constructor
     public CompraPage(WebDriver webDriver) {
@@ -59,37 +60,48 @@ public class CompraPage extends BasePage {
     }
 
     /**
-     * Marks the "Bank card" radio button as selected or unselected in the "Compra" page
+     * Marks the "Bank card" radio button on the "Compra" page
      *
-     * @param expectedSelected boolean with the expected selected state of the element
      */
-    public void setCardRadioButtonSelected(boolean expectedSelected) {
-        waitUntilElementIsDisplayed(cardRadioLabel, Duration.ofSeconds(5));
-        setElementSelected(cardRadioInput, cardRadioLabel, expectedSelected);
+    public void clickPurchaseCard() {
+        WebElement card = webDriver.findElement(cardInput);
+        JavascriptExecutor js = (JavascriptExecutor) webDriver;
+        js.executeScript("arguments[0].click();", card);
     }
 
     /**
      * Clicks in new card in the Compra page.
      */
     public void clickNewBankCard() {
-        waitUntilElementIsDisplayed(newBankCard, Duration.ofSeconds(5));
-        scrollElementIntoView(newBankCard);
-        clickElement(newBankCard);
+        WebElement newCard = webDriver.findElement(newBankCard);
+        JavascriptExecutor js = (JavascriptExecutor) webDriver;
+        js.executeScript("arguments[0].click();", newCard);
     }
 
-    ///**
-    // * clicar en checkbox condiciones de venta
-    // */
-    //DEMOQA FORM
+    /**
+     * Marks the "Conditions of ourchase" checkbox as selected or unselected in the "Compra" page
+     *
+     */
+    public void clickPurchaseCondition(){
+       WebElement conditions = webDriver.findElement(conditionsCheckboxInput);
+        JavascriptExecutor js = (JavascriptExecutor) webDriver;
+        js.executeScript("arguments[0].click();", conditions);
+    }
+    /**
+     * Verify the ticket price on the "Compra" page
+     */
+    public void verifyTotalPurchasePrice(){
+        waitUntilElementIsDisplayed(totalPriceCompralizeLocator, Duration.ofSeconds(5));
+        boolean totalPurchasePrice = isElementDisplayed(totalPriceCompralizeLocator);
+        Assert.assertTrue(totalPurchasePrice);
+    }
 
-    ///**
-    // * Comprobar el precio del billete
-    // */
-    //assertequals al metodo seleccionarTuViajePage.verifyTotalPrice();
-
-    ///**
-    // * clic en button continuar con la compra
-    // */
-    //demo qa click button
+    /**
+    * clicks in the button continue with the Purchase on the "Compra" page
+    */
+    public void clickContinuarCompra(){
+        waitUntilElementIsDisplayed(btnContinuarCompra, Duration.ofSeconds(5));
+        clickElement(btnContinuarCompra);
+    }
 
 }

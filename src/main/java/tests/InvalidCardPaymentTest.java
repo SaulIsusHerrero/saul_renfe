@@ -76,11 +76,11 @@ public class InvalidCardPaymentTest {
         compraPage.verifyYouAreInCompraPage();
         compraPage.typeEmail("test@qa.com");
         compraPage.writePhoneField("696824570");
-        compraPage.setCardRadioButtonSelected(true);
+        compraPage.clickPurchaseCard();
         compraPage.clickNewBankCard();
-        //compraPage.Comprobar el precio del billete
-        //compraPage.clicar en checkbox condiciones de venta
-        //compraPage.clic en button continuar con la compra
+        compraPage.clickPurchaseCondition();
+        compraPage.verifyTotalPurchasePrice();
+        compraPage.clickContinuarCompra();
         //pasarelaPagoPage.text box fecha caducidad
         //pasarelaPagoPage. text box cvv
         //pasarelaPagoPage. click en boton pagar
