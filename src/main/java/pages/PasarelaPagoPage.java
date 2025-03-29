@@ -3,20 +3,18 @@ package pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 
 public class PasarelaPagoPage extends BasePage {
     //Locators
-    private By trainAvailable = By.cssSelector("div[id^='precio-viaje']:not(:has(div))");
-    private By seleccionaTuViajeLabel = By.xpath("//span[contains(text(), 'Selecciona tu viaje') and not(ancestor::select[@disabled])]");
+    private By cardField = By.xpath("//input[@id='card-number']");
+    private By expirationField = By.xpath("//input[@id='card-expiration']");
+    private By totalPricePasarelaLocator = By.cssSelector("div.right");
+    private By cvvField = By.xpath("//input[@id='card-cvv']");
+    private By btnPayment = By.cssSelector("button#divImgAceptar.btn.btn-lg.btn-accept.validColor");
+    private By popUpError = By.cssSelector("div#myModalBody.modal-body");
 
-    //Variables
-    private BasePage basePage;
-    WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
     //Constructor
     public PasarelaPagoPage(WebDriver webDriver) {
@@ -26,42 +24,60 @@ public class PasarelaPagoPage extends BasePage {
 
     //Methods
     /**
-     * Assert que estoy en la Page y esta habilitada “Personaliza tu viaje”
+     * Assert I am in the "pasarela de pago" Page
      */
     public void verifyYouAreInPasarelaPagoPage() {
-        //comprobar redsys getURL
-        //Assert.assertTrue("Selecciona tu viaje", labelDisplayed);
-        //Assert.assertTrue("Selecciona tu viaje", labelEnabled);
+        String currentURL = webDriver.getCurrentUrl();
+        String expectedURL = "https://sis.redsys.es/sis/realizarPago";
+        boolean correctURL = currentURL == expectedURL;
+        Assert.assertTrue(correctURL);
     }
 
     /**
-     * Assert al importe
+     * Assert to the total price on the "Pasarela de Pago" page
      */
-    //mismo
+    public void verifyTotalPricePasarelaPago(){
+        waitUntilElementIsDisplayed(totalPricePasarelaLocator, Duration.ofSeconds(5));
+        boolean totalPricePasarelaPago = isElementDisplayed(totalPricePasarelaLocator);
+        Assert.assertTrue(totalPricePasarelaPago);
+    }
 
     /**
-     * Introducir numero tarjeta
+     * Type the card in the textbox on the "Pasarela de pago" page.
+     * @param card as a string
      */
-    //DEMOQA FORM
+    public void typeBankCard(String card) {
+        waitUntilElementIsDisplayed(cardField, Duration.ofSeconds(5));
+        setElementText(cardField, card);
+    }
 
     /**
-     * Introducir fecha caducidad
+     * Type the Expiration Date in the textbox on the "Pasarela de pago" page.
+     * @param expiration as a string
      */
-    //DEMOQA FORM
+    public void typeExpirationDate(String expiration){
+        waitUntilElementIsDisplayed(expirationField, Duration.ofSeconds(5));
+        setElementText(expirationField, expiration);
+    }
 
     /**
-     * Introducir CVV
+     * Type the CVV in the text box on the "Pasarela de pago" page
+     * @param cvv as a string
      */
-    //DEMO QA FORM
+    public void typeCVV(String cvv){
+        waitUntilElementIsDisplayed(cvvField, Duration.ofSeconds(5));
+        setElementText(cvvField, cvv);
+    }
 
     /**
-     * clicar en boton pagar
+     * Click on payment button
      */
-    //click
-
-    /**
-     * Assert aparece el pop de error esperodo de tarjeta no soportada (RS18)
-     */
-    //assertTrue
+    public void clickPaymentButton(){
+        waitUntilElementIsDisplayed(btnPayment, Duration.ofSeconds(5));
+        clickElement(btnPayment);
+        waitUntilElementIsDisplayed(popUpError, Duration.ofSeconds(5));
+        boolean popUpErrorExpected = isElementDisplayed(popUpError);
+        Assert.assertTrue(popUpErrorExpected);
+    }
 
 }

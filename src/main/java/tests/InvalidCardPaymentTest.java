@@ -19,7 +19,7 @@ public class InvalidCardPaymentTest {
     private IntroduceTusDatosPage introduceTusDatosPage;
     private PersonalizaTuViajePage personalizaTuViajePage;
     private CompraPage compraPage;
-    //private PasarelaPagoPage pasarelaPagoPage;
+    private PasarelaPagoPage pasarelaPagoPage;
 
     @BeforeMethod
     public void setup() throws InterruptedException {
@@ -35,7 +35,7 @@ public class InvalidCardPaymentTest {
         introduceTusDatosPage = new IntroduceTusDatosPage(webDriver); //Initialization of the IntroduceTusDatos Page.
         personalizaTuViajePage = new PersonalizaTuViajePage(webDriver); //Initialization of the PersonalizaTuViaje Page.
         compraPage = new CompraPage(webDriver); //Initialization of the Compra Page.
-        //pasarelaPagoPage = new PasarelaPagoPage(webDriver); //Initialization of the pasarelaPago Page.
+        pasarelaPagoPage = new PasarelaPagoPage(webDriver); //Initialization of the pasarelaPago Page.
 
 
     }
@@ -50,48 +50,50 @@ public class InvalidCardPaymentTest {
         homePage.clickAcceptButton();
         homePage.clickSearchTicketButton();
         seleccionarTuViajePage.verifyYouAreInSelecionaTuViaje();
-        seleccionarTuViajePage.selectFirstTrainAvailable();
-        seleccionarTuViajePage.clickFareApplied();
-        seleccionarTuViajePage.verifyNumberOfTravelers();
-        seleccionarTuViajePage.verifyFareIsBasic();
-        seleccionarTuViajePage.verifyFarePrice();
-        seleccionarTuViajePage.verifyTotalPrice();
-        seleccionarTuViajePage.verifyFareAndTotalPricesAreEquals();
-        seleccionarTuViajePage.clickSelectButton();
-        seleccionarTuViajePage.popUpFareAppears();
-        seleccionarTuViajePage.linkContinueSameFareAppears();
-        seleccionarTuViajePage.clickLinkContinueSameFare();
-        introduceTusDatosPage.verifyYouAreInIntroduceYourDataPage();
-        introduceTusDatosPage.writeFirstNameField("John");
-        introduceTusDatosPage.writeFirstSurnameField("Doe");
-        introduceTusDatosPage.writeSecondSurnameField("López");
-        introduceTusDatosPage.writeDNIField("46131651E");
-        introduceTusDatosPage.writeEmailField("test@qa.com");
-        introduceTusDatosPage.writePhoneField("696824570");
-        introduceTusDatosPage.verifyTotalPriceData();
-        introduceTusDatosPage.clickPersonalizeTrip();
-        personalizaTuViajePage.verifyYouAreInPersonalizedYourTravelPage();
-        personalizaTuViajePage.continueWithPurchase();
-        personalizaTuViajePage.verifyTotalPersonalizePrice();
-        compraPage.verifyYouAreInCompraPage();
-        compraPage.typeEmail("test@qa.com");
-        compraPage.writePhoneField("696824570");
-        compraPage.clickPurchaseCard();
-        compraPage.clickNewBankCard();
-        compraPage.clickPurchaseCondition();
-        compraPage.verifyTotalPurchasePrice();
-        compraPage.clickContinuarCompra();
-        //pasarelaPagoPage.text box fecha caducidad
-        //pasarelaPagoPage. text box cvv
-        //pasarelaPagoPage. click en boton pagar
-        //pasarelaPagoPage. assertTrue al error pop up de "tarjeta no sopoertada (RS18)"
+        //seleccionarTuViajePage.selectFirstTrainAvailable();
+        //seleccionarTuViajePage.clickFareApplied();
+        //seleccionarTuViajePage.verifyNumberOfTravelers();
+        //seleccionarTuViajePage.verifyFareIsBasic();
+        //seleccionarTuViajePage.verifyFarePrice();
+        //seleccionarTuViajePage.verifyTotalPrice();
+        //seleccionarTuViajePage.verifyFareAndTotalPricesAreEquals();
+        //seleccionarTuViajePage.clickSelectButton();
+        //seleccionarTuViajePage.popUpFareAppears();
+        //seleccionarTuViajePage.linkContinueSameFareAppears();
+        //seleccionarTuViajePage.clickLinkContinueSameFare();
+        //introduceTusDatosPage.verifyYouAreInIntroduceYourDataPage();
+        //introduceTusDatosPage.writeFirstNameField("John");
+        //introduceTusDatosPage.writeFirstSurnameField("Doe");
+        //introduceTusDatosPage.writeSecondSurnameField("López");
+        //introduceTusDatosPage.writeDNIField("46131651E");
+        //introduceTusDatosPage.writeEmailField("test@qa.com");
+        //introduceTusDatosPage.writePhoneField("696824570");
+        //introduceTusDatosPage.verifyTotalPriceData();
+        //introduceTusDatosPage.clickPersonalizeTrip();
+        //personalizaTuViajePage.verifyYouAreInPersonalizedYourTravelPage();
+        //personalizaTuViajePage.continueWithPurchase();
+        //personalizaTuViajePage.verifyTotalPersonalizePrice();
+        //compraPage.verifyYouAreInCompraPage();
+        //compraPage.typeEmail("test@qa.com");
+        //compraPage.writePhoneField("696824570");
+        //compraPage.clickPurchaseCard();
+        //compraPage.clickNewBankCard();
+        //compraPage.clickPurchaseCondition();
+        //compraPage.verifyTotalPurchasePrice();
+        //compraPage.clickContinuarCompra();
+        pasarelaPagoPage.verifyYouAreInPasarelaPagoPage();
+        pasarelaPagoPage.verifyTotalPricePasarelaPago();
+        pasarelaPagoPage.typeBankCard("4000 0000 0000 1000");
+        pasarelaPagoPage.typeExpirationDate("03/30");
+        pasarelaPagoPage.typeCVV("990");
+        pasarelaPagoPage.clickPaymentButton();
     }
-    /**
+
     @AfterMethod
         public void tearDown() {
             if (webDriver != null) {
                 webDriver.quit(); //Closes the current instance of the browser
             }
-        }*/
+        }
 
 }
