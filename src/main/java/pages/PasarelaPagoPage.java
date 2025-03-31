@@ -29,8 +29,7 @@ public class PasarelaPagoPage extends BasePage {
     public void verifyYouAreInPasarelaPagoPage() {
         String currentURL = webDriver.getCurrentUrl();
         String expectedURL = "https://sis.redsys.es/sis/realizarPago";
-        boolean correctURL = currentURL == expectedURL;
-        Assert.assertTrue(correctURL);
+        Assert.assertEquals(currentURL,expectedURL);
     }
 
     /**
