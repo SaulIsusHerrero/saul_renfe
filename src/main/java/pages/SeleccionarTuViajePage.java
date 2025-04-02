@@ -13,6 +13,7 @@ public class SeleccionarTuViajePage extends BasePage {
 
     //Locators
     private By trainAvailable = By.cssSelector("div[id^='precio-viaje']:not(:has(div))");
+    private By trainAvailableBasicFare = By.cssSelector("div[id^='precio-viaje']:not(:has(div))+div>div>div[class='planes-opciones']>div:nth-child(1)");
     private By fareTrainBasic = By.xpath("(//span[@style='padding-right:10px;' and text()='Básico'])[1]");
     private By selectDayRightArrow = By.cssSelector("button.move_to_tomorrow");
     private By seleccionaTuViajeLabel = By.xpath("//span[contains(text(), 'Selecciona tu viaje') and not(ancestor::select[@disabled])]");
@@ -55,6 +56,7 @@ public class SeleccionarTuViajePage extends BasePage {
         while (control) {
             // Encuentra la lista de trenes disponibles
             List<WebElement> trainList = webDriver.findElements(trainAvailable);
+            List<WebElement> trainFare = webDriver.findElements(trainAvailableBasicFare);
             WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
             if (!trainList.isEmpty()) {
@@ -63,6 +65,7 @@ public class SeleccionarTuViajePage extends BasePage {
                 wait.until(ExpectedConditions.visibilityOf(firstTrain));
                 wait.until(ExpectedConditions.elementToBeClickable(firstTrain));
                 firstTrain.click();
+                trainFare.get(0).click();//clicando en la tarifa
                 control = false;
             } else {
                 // Haz clic en el botón del siguiente día para buscar trenes disponibles
@@ -94,7 +97,7 @@ public class SeleccionarTuViajePage extends BasePage {
 
     public void verifyFareIsBasic(){
         waitUntilElementIsDisplayed(basicFareLocator, Duration.ofSeconds(5));
-        boolean basicFare = isElementDisplayed(basicFareLocator);
+        boolean basicFare = isElementDisplayed(basicFareLocator); //@todo cambiar selector, apunta a arriba.
         Assert.assertTrue(basicFare);
     }
 
@@ -111,7 +114,7 @@ public class SeleccionarTuViajePage extends BasePage {
     }
 
     public void verifyFareAndTotalPricesAreEquals(){
-        boolean basicPrice = isElementDisplayed(totalPriceSelectLocator);
+        boolean basicPrice = isElementDisplayed(basicFareLocator); //@todo comprobaer el precio, no la disponibilidad
         boolean totalPrice = isElementDisplayed(totalPriceSelectLocator);
         Assert.assertEquals(basicPrice,totalPrice);
     }
@@ -122,14 +125,14 @@ public class SeleccionarTuViajePage extends BasePage {
     }
 
     public void popUpFareAppears(){
-        waitUntilElementIsDisplayed(popUpChangeFare, Duration.ofSeconds(5));
+        waitUntilElementIsDisplayed(popUpChangeFare, Duration.ofSeconds(5)); // @todo usar el atributo stile, donde comprobar si aparece  display:none o block
         boolean popUpAppears = isElementDisplayed(popUpChangeFare);
         Assert.assertTrue(popUpAppears);
     }
 
     public void linkContinueSameFareAppears(){
         waitUntilElementIsDisplayed(popUpChangeFare, Duration.ofSeconds(5));
-        boolean popUpAppears = isElementDisplayed(popUpChangeFare);
+        boolean popUpAppears = isElementDisplayed(popUpChangeFare); //@todo comprobar que aparece el link
         Assert.assertTrue(popUpAppears);
     }
 

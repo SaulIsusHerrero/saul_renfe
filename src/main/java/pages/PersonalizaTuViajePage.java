@@ -33,7 +33,7 @@ public class PersonalizaTuViajePage extends BasePage {
         WebElement element = webDriver.findElement(personalizaTuViajeLabel);
         boolean labelDisplayed = element.isDisplayed();
         boolean labelEnabled = element.isEnabled();
-        Assert.assertTrue("Personaliza tu viaje", labelDisplayed);
+        Assert.assertTrue("Personaliza tu viaje", labelDisplayed); //@todo igual que en el titulo de la pag anterior
         Assert.assertTrue("Personaliza tu viaje", labelEnabled);
     }
 
@@ -50,7 +50,7 @@ public class PersonalizaTuViajePage extends BasePage {
      */
     public void verifyTotalPersonalizePrice(){
         waitUntilElementIsDisplayed(totalPricePersonalizeLocator, Duration.ofSeconds(5));
-        boolean totalPricePersonalize = isElementDisplayed(totalPricePersonalizeLocator);
+        boolean totalPricePersonalize = isElementDisplayed(totalPricePersonalizeLocator); //todo comprobar que el precio sigue siendo el mismo
         Assert.assertTrue(totalPricePersonalize);
     }
 

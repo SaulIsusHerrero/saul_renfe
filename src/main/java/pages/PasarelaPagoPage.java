@@ -29,7 +29,7 @@ public class PasarelaPagoPage extends BasePage {
     public void verifyYouAreInPasarelaPagoPage() {
         String currentURL = webDriver.getCurrentUrl();
         String expectedURL = "https://sis.redsys.es/sis/realizarPago";
-        Assert.assertEquals(currentURL,expectedURL);
+        Assert.assertEquals("Error: La url que esta cargada en la web es: " + currentURL + ", sin embargo se esperaba:" + expectedURL, currentURL,expectedURL); //ejemplo
     }
 
     /**
@@ -37,7 +37,7 @@ public class PasarelaPagoPage extends BasePage {
      */
     public void verifyTotalPricePasarelaPago(){
         waitUntilElementIsDisplayed(totalPricePasarelaLocator, Duration.ofSeconds(5));
-        boolean totalPricePasarelaPago = isElementDisplayed(totalPricePasarelaLocator);
+        boolean totalPricePasarelaPago = isElementDisplayed(totalPricePasarelaLocator); //@todo verificar precio, no que este disponible
         Assert.assertTrue(totalPricePasarelaPago);
     }
 

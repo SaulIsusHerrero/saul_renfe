@@ -55,6 +55,7 @@ public class InvalidCardPaymentTest {
         seleccionarTuViajePage.verifyNumberOfTravelers();
         seleccionarTuViajePage.verifyFareIsBasic();
         seleccionarTuViajePage.verifyFarePrice();
+        seleccionarTuViajePage.popUpFareAppears();//prueba
         seleccionarTuViajePage.verifyTotalPrice();
         seleccionarTuViajePage.verifyFareAndTotalPricesAreEquals();
         seleccionarTuViajePage.clickSelectButton();

@@ -41,7 +41,7 @@ public class IntroduceTusDatosPage extends BasePage {
         boolean labelDisplayed = element.isDisplayed();
         boolean labelEnabled = element.isEnabled();
         Assert.assertTrue("Introduce tus datos", labelDisplayed);
-        Assert.assertTrue("Introduce tus datos", labelEnabled);
+        Assert.assertTrue("Introduce tus datos", labelEnabled); //@todo investigar como se comprueba el texto, el tipo de assert que necesitas
     }
 
     /**
@@ -109,7 +109,7 @@ public class IntroduceTusDatosPage extends BasePage {
      */
     public void verifyTotalPriceData(){
         waitUntilElementIsDisplayed(totalPriceDataLocator, Duration.ofSeconds(5));
-        boolean totalPriceData = isElementDisplayed(totalPriceDataLocator);
+        boolean totalPriceData = isElementDisplayed(totalPriceDataLocator); //@todo verificar que el precio es el mismo que en la pagina anterior.
         Assert.assertTrue(totalPriceData);
     }
 

@@ -35,7 +35,7 @@ public class CompraPage extends BasePage {
         WebElement element = webDriver.findElement(compraLabel);
         boolean labelDisplayed = element.isDisplayed();
         boolean labelEnabled = element.isEnabled();
-        Assert.assertTrue("Compra", labelDisplayed);
+        Assert.assertTrue("Compra", labelDisplayed); //todo verificar igual que en las anteriores
         Assert.assertTrue("Compra", labelEnabled);
     }
 
@@ -92,7 +92,7 @@ public class CompraPage extends BasePage {
      */
     public void verifyTotalPurchasePrice(){
         waitUntilElementIsDisplayed(totalPriceCompralizeLocator, Duration.ofSeconds(5));
-        boolean totalPurchasePrice = isElementDisplayed(totalPriceCompralizeLocator);
+        boolean totalPurchasePrice = isElementDisplayed(totalPriceCompralizeLocator); //todo verificar el precio
         Assert.assertTrue(totalPurchasePrice);
     }
 
